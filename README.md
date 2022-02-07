@@ -25,3 +25,8 @@ contribute to this grass-roots community and hopefully help tournament organizer
 run tournaments more smoothly. Additionally, the player statistics can be used by community 
 members to evaluate player performance and use the data to formulate their own player rankings.
 
+## User stories:
+- As a user, I want to be able to create a 32-player tournament bracket based on player rankings.
+- As a user, I want to be able to add a new player to the player database.
+- As a user, I want to be able to view the head-to-head statistics of two players.
+- As a user, I want to be able to view the ranking of 32 players based on their performances in the past year.
