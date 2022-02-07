@@ -23,13 +23,16 @@ public class Match {
     // EFFECTS: declares who won the match.
     public void winner(String player) {
         //stub
+        //TODO
     }
 
     // REQUIRES:
     // MODIFIES: Player, Tournament(?)
-    // EFFECTS: updates the record of players in match
+    // EFFECTS: processes the completed match; updates the record of players in match,
+    // updates tournament bracket
     public void recordMatch() {
         //stub
+        //TODO
     }
 
     // getter methods

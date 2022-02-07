@@ -4,7 +4,7 @@
 
 What does the application do?
 
-This is a application tool for the competitive E-sports game Super Smash Bros. Melee. The
+This is an application tool for the competitive E-sports game Super Smash Bros. Melee. The
 aims of this application are to:
 
 1. Track tournament results of my favourite competitive Super Smash Bros. Melee competitors.

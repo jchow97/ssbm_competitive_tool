@@ -15,14 +15,14 @@ public class PlayerList {
     private static final Player hbox = new Player("Hungrybox", 323, 69, ["Jigglypuff"]);
     private static final Player leffen = new Player("Leffen", 49, 3, ["Fox", "Sheik"]);*/
 
-    private static final Player mango = new Player("Mang0");
-    private static final Player zain = new Player("Zain");
-    private static final Player plup = new Player("Plup");
-    private static final Player ibdw = new Player("iBDW");
-    private static final Player wizzrobe = new Player("Wizzrobe");
-    private static final Player sfat = new Player("SFAT");
-    private static final Player hbox = new Player("Hungrybox");
-    private static final Player leffen = new Player("Leffen");
+    private static final Player mango = new Player("Mang0", "Falco", "Fox");
+    private static final Player zain = new Player("Zain", "Marth", "Roy");
+    private static final Player plup = new Player("Plup", "Sheik", "Fox");
+    private static final Player ibdw = new Player("iBDW", "Fox", "N/A");
+    private static final Player wizzrobe = new Player("Wizzrobe", "Captain Falcon", "N/A");
+    private static final Player sfat = new Player("SFAT", "Fox", "N/A");
+    private static final Player hbox = new Player("Hungrybox", "Jigglypuff", "N/A");
+    private static final Player leffen = new Player("Leffen", "Fox", "Sheik");
 
     private ArrayList<Player> playerList;
 
@@ -45,4 +45,16 @@ public class PlayerList {
     public ArrayList<Player> updateRanks() {
         return null; //stub
     }
+
+    public boolean addPlayer(Player player) {
+        //playerList.add(player);
+        return false; //stub
+        //TODO
+    }
+
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
+    }
+
+
 }
