@@ -1,12 +1,14 @@
 package ui;
 
 import model.PlayerList;
+import java.util.ArrayList;
 
 import java.util.Scanner;
 
 // Super Smash Bros. Melee Application
 public class MeleeApp {
     private Scanner input;
+    private PlayerList playerList;
 
     // EFFECTS: runs the Melee application
     public MeleeApp() {
@@ -34,12 +36,12 @@ public class MeleeApp {
             }
         }
 
-        System.out.println("\nGoodbye!");
+        System.out.println("\nThank you for using our application!");
     }
 
     // EFFECTS: initializes 8-player list.
     private void init() {
-        PlayerList playerList = new PlayerList();
+        playerList = new PlayerList();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
@@ -55,11 +57,22 @@ public class MeleeApp {
         System.out.println("\tq -> Quit");
     }
 
+    private void displayPlayerRankings() {
+        final Object[][] table = new String[][];
+        // re-initialize playerList because of local scoping in init()?
+
+        table[0] = new String[] {"Rank", "Player", "Wins", "Losses", "Characters"};
+        table[1] = new String[] {"1", playerList.get(0)};
+        System.out.println("\nRank  Player   Wins   Losses  Characters      ");
+        System.out.println("\n1     player.");
+    }
+
     // MODIFIES: this
     // EFFECTS: process user command
     private void processCommand(String command) {
         if (command.equals("v")) {
             //display player rankings
+
         } else if (command.equals("t")) {
             //display tournament viewer
             //display Match 1 details
