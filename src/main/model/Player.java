@@ -64,7 +64,6 @@ public class Player {
         //TODO
     }
 
-
     // REQUIRES:
     // MODIFIES: this
     // EFFECTS: recalculates winRate and returns new winRate.
@@ -75,6 +74,7 @@ public class Player {
         // this.winRate = wins/losses;
         // getWinRate();
     }
+
 
     public String getName() {
         return name;

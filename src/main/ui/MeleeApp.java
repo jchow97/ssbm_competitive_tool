@@ -60,15 +60,20 @@ public class MeleeApp {
     private void processCommand(String command) {
         if (command.equals("v")) {
             //display player rankings
+            //TODO
         } else if (command.equals("t")) {
             //display tournament viewer
             //display Match 1 details
+            //TODO
         } else if (command.equals("s")) {
             //ask for player name
+            //TODO
         } else if (command.equals("a")) {
             //ask for player details.
+            //TODO
         } else {
             //invalid input message.
+            //TODO
         }
     }
 

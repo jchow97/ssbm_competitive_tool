@@ -55,4 +55,5 @@ public class Match {
     public String getPlayerTwoCharacter() {
         return playerTwoCharacter;
     }
+
 }

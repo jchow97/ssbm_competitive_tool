@@ -40,7 +40,6 @@ public class Tournament {
         // TODO
     }
 
-
     public Match getQuarterfinalMatch1() {
         return quarterfinalMatch1;
     }

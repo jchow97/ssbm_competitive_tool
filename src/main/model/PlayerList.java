@@ -55,6 +55,4 @@ public class PlayerList {
     public ArrayList<Player> getPlayerList() {
         return playerList;
     }
-
-
 }

@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
@@ -18,6 +20,7 @@ class PlayerTest {
     @Test
     void testConstructor() {
         assertEquals("Barry", testPlayer1.getName());
-        //assertEquals(1, testPlayer1.getMainChars());
+        ArrayList<String> player1MainChars = testPlayer1.getMainChars();
+        assertEquals(1, player1MainChars.length);
     }
 }
