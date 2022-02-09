@@ -1,15 +1,16 @@
 package model;
 
 
-import java.util.ArrayList;
-
 public class Tournament {
     private static final int TOURNAMENT_SIZE = 8;
 
-    private Match match1;
-    private Match match2;
-    private Match match3;
-    private Match match4;
+    private Match quarterfinalMatch1;
+    private Match quarterfinalMatch2;
+    private Match quarterfinalMatch3;
+    private Match quarterfinalMatch4;
+    private Match semifinalMatch1;
+    private Match semifinalMatch2;
+    private Match grandFinalMatch;
 
 
     // EFFECTS: construct an 8-player tournament, with 4 matches based on rankings.
@@ -17,7 +18,7 @@ public class Tournament {
         //TODO
     }
 
-    // REQUIRES: all current matches have winners declared
+    // REQUIRES:
     // MODIFIES: this
     // EFFECTS: creates the next round of matches in the tournament if current matches.
     // might be able to set to private (?)
@@ -25,20 +26,46 @@ public class Tournament {
         //TODO
     }
 
-
-    public Match getMatch1() {
-        return match1;
+    // REQUIRES: all quarterfinal matches have winners declared
+    // MODIFIES: this
+    // EFFECTS: creates the semifinal (top 4) matches in the tournament.
+    private void setSemifinalRound() {
+        //TODO
     }
 
-    public Match getMatch2() {
-        return match2;
+    // REQUIRES: all semifinal matches have winners declared
+    // MODIFIES: this
+    // EFFECTS: creates the final match in the tournament.
+    private void setGrandFinalRound() {
+        // TODO
     }
 
-    public Match getMatch3() {
-        return match3;
+
+    public Match getQuarterfinalMatch1() {
+        return quarterfinalMatch1;
     }
 
-    public Match getMatch4() {
-        return match4;
+    public Match getQuarterfinalMatch2() {
+        return quarterfinalMatch2;
+    }
+
+    public Match getQuarterfinalMatch3() {
+        return quarterfinalMatch3;
+    }
+
+    public Match getQuarterfinalMatch4() {
+        return quarterfinalMatch4;
+    }
+
+    public Match getSemifinalMatch1() {
+        return semifinalMatch1;
+    }
+
+    public Match getSemifinalMatch2() {
+        return semifinalMatch2;
+    }
+
+    public Match getGrandFinalMatch() {
+        return grandFinalMatch;
     }
 }

@@ -19,6 +19,7 @@ public class Player {
     // character(s) they play.
     public Player(String name, String characterOne, String characterTwo) {
         this.name = name;
+        // REDO these with helper functions
         wins = 0;
         losses = 0;
         winRate = 0;

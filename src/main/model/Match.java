@@ -2,13 +2,13 @@ package model;
 
 public class Match {
 
-    private String playerOne;
-    private String playerTwo;
+    private Player playerOne;
+    private Player playerTwo;
     private String winner;
     private String playerOneCharacter;
     private String playerTwoCharacter;
 
-    public Match(String playerOne, String playerOneCharacter, String playerTwo, String playerTwoCharacter) {
+    public Match(Player playerOne, String playerOneCharacter, Player playerTwo, String playerTwoCharacter) {
         this.playerOne = playerOne;
         this.playerOneCharacter = playerOneCharacter;
 
@@ -36,11 +36,11 @@ public class Match {
     }
 
     // getter methods
-    public String getPlayerOne() {
+    public Player getPlayerOne() {
         return playerOne;
     }
 
-    public String getPlayerTwo() {
+    public Player getPlayerTwo() {
         return playerTwo;
     }
 
