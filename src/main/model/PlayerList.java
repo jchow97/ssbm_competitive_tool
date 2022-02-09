@@ -15,14 +15,14 @@ public class PlayerList {
     private static final Player hbox = new Player("Hungrybox", 323, 69, ["Jigglypuff"]);
     private static final Player leffen = new Player("Leffen", 49, 3, ["Fox", "Sheik"]);*/
 
-    private static final Player mango = new Player("Mang0", "Falco", "Fox");
-    private static final Player zain = new Player("Zain", "Marth", "Roy");
-    private static final Player plup = new Player("Plup", "Sheik", "Fox");
-    private static final Player ibdw = new Player("iBDW", "Fox", "N/A");
-    private static final Player wizzrobe = new Player("Wizzrobe", "Captain Falcon", "N/A");
-    private static final Player sfat = new Player("SFAT", "Fox", "N/A");
-    private static final Player hbox = new Player("Hungrybox", "Jigglypuff", "N/A");
-    private static final Player leffen = new Player("Leffen", "Fox", "Sheik");
+    private static final Player mango = new Player("Mang0", "Falco", "Fox", 1);
+    private static final Player zain = new Player("Zain", "Marth", "Roy", 2);
+    private static final Player plup = new Player("Plup", "Sheik", "Fox", 3);
+    private static final Player ibdw = new Player("iBDW", "Fox", "N/A", 4);
+    private static final Player wizzrobe = new Player("Wizzrobe", "Captain Falcon", "N/A", 5);
+    private static final Player sfat = new Player("SFAT", "Fox", "N/A", 6);
+    private static final Player hbox = new Player("Hungrybox", "Jigglypuff", "N/A", 7);
+    private static final Player leffen = new Player("Leffen", "Fox", "Sheik", 8);
 
     private ArrayList<Player> playerList;
 
@@ -42,9 +42,10 @@ public class PlayerList {
     // REQUIRES: non-empty list of players
     // MODIFIES: this
     // EFFECTS: updates players to reflect current ranking.
-    public ArrayList<Player> updateRanks() {
-        return null; //stub
-    }
+    // TODO for future deliverable.
+//    public ArrayList<Player> updateRanks() {
+//        return null; //stub
+//    }
 
     public boolean addPlayer(Player player) {
         //playerList.add(player);

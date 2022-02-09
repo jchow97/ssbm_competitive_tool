@@ -15,21 +15,20 @@ public class Match {
         this.playerTwo = playerTwo;
         this.playerTwoCharacter = playerTwoCharacter;
         this.winner = "";
-
     }
 
-    // REQUIRES: (doesn't assume winner is p1 or p2, code will handle it).
+    // REQUIRES: assumes no winner has been declared so far
+    // (doesn't assume winner is p1 or p2, code will handle it).
     // MODIFIES: this
     // EFFECTS: declares who won the match.
-    public void winner(String player) {
+    public void declareWinner(String winner) {
         //stub
         //TODO
     }
 
-    // REQUIRES:
+    // REQUIRES: winner has been declared
     // MODIFIES: Player, Tournament(?)
-    // EFFECTS: processes the completed match; updates the record of players in match,
-    // updates tournament bracket
+    // EFFECTS: processes the completed match; updates the record of players in match
     public void recordMatch() {
         //stub
         //TODO

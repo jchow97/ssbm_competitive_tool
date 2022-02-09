@@ -3,6 +3,9 @@ package model;
 
 import java.util.ArrayList;
 
+// may need to rethink how to manipulate rank among players. Potential for data structure implementation here.
+// need a DS that is good at search, and perhaps re-arranging (?).
+
 public class Player {
 
     private String name;
@@ -17,7 +20,7 @@ public class Player {
     // MODIFIES:
     // EFFECTS: constructs a player with a given initial name, and
     // character(s) they play.
-    public Player(String name, String characterOne, String characterTwo) {
+    public Player(String name, String characterOne, String characterTwo, int rank) {
         this.name = name;
         // REDO these with helper functions
         wins = 0;
@@ -28,7 +31,7 @@ public class Player {
         if (!characterTwo.equals("N/A")) {
             mainChars.add(characterTwo);
         }
-        rank = -1; // -1 to signal error
+        this.rank = rank;
         tournamentWins = 0;
     }
 
@@ -64,6 +67,16 @@ public class Player {
         //TODO
     }
 
+
+    //may not need this
+    // REQUIRES:
+    // MODIFIES: this
+    // EFFECTS: sets player rank
+//    public void setRank(int rank) {
+//        //stub
+//        //TODO
+//    }
+
     // REQUIRES:
     // MODIFIES: this
     // EFFECTS: recalculates winRate and returns new winRate.
@@ -74,7 +87,6 @@ public class Player {
         // this.winRate = wins/losses;
         // getWinRate();
     }
-
 
     public String getName() {
         return name;
