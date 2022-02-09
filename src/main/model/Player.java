@@ -25,7 +25,7 @@ public class Player {
         winRate = 0;
         this.mainChars = new ArrayList<>();
         mainChars.add(characterOne);
-        if (characterTwo.equals("N/A")) {
+        if (!characterTwo.equals("N/A")) {
             mainChars.add(characterTwo);
         }
         rank = -1; // -1 to signal error
