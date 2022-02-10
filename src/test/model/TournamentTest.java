@@ -66,6 +66,8 @@ public class TournamentTest {
     @Test
     void testSetSemifinal() {
         testTournament.setSemifinalRound();
+        semiFinal1 = testTournament.getSemifinalMatch1();
+        semiFinal2 = testTournament.getQuarterfinalMatch2();
 
         assertEquals(mango, semiFinal1.getPlayerOne());
         assertEquals("Falco", semiFinal1.getPlayerOneCharacter());
@@ -80,8 +82,32 @@ public class TournamentTest {
 
     @Test
     void testSetGrandFinal() {
+        testTournament.setSemifinalRound();
 
+        semiFinal1.declareWinner("Mang0");
+        semiFinal2.declareWinner("Plup");
 
+        testTournament.setGrandFinalRound();
+
+        testTournament.setGrandFinalRound();
+        assertEquals(mango, grandFinal.getPlayerOne());
+        assertEquals("Falco", grandFinal.getPlayerOneCharacter());
+        assertEquals(plup, grandFinal.getPlayerOne());
+        assertEquals("Sheik", grandFinal.getPlayerTwoCharacter());
+    }
+
+    @Test
+    void testDeclareWinner() {
+        testTournament.setSemifinalRound();
+
+        semiFinal1.declareWinner("Mang0");
+        semiFinal2.declareWinner("Plup");
+
+        testTournament.setGrandFinalRound();
+
+        testTournament.declareWinner("Plup");
+
+        assertEquals(plup, testTournament.declareWinner());
     }
 
 }

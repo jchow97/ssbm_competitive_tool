@@ -21,8 +21,8 @@ public class Tournament {
 
     // REQUIRES: grand final match to have a winner declared
     // MODIFIES: this
-    // EFFECTS: declares a winner for the tournament.
-    public void declareWinner() {
+    // EFFECTS: declares a winner for the tournament and returns player.
+    public Player declareWinner() {
         // TODO
     }
 
