@@ -23,15 +23,14 @@ public class PlayerListTest {
     @BeforeEach
     void runBefore() {
         testPlayerList = new PlayerList();
-        ArrayList<Player> list = testPlayerList.getPlayerList();
-        testPlayer1 = list.get(0);
-        testPlayer2 = list.get(1);
-        testPlayer3 = list.get(2);
-        testPlayer4 = list.get(3);
-        testPlayer5 = list.get(4);
-        testPlayer6 = list.get(5);
-        testPlayer7 = list.get(6);
-        testPlayer8 = list.get(7);
+        testPlayer1 = testPlayerList.get(0);
+        testPlayer2 = testPlayerList.get(1);
+        testPlayer3 = testPlayerList.get(2);
+        testPlayer4 = testPlayerList.get(3);
+        testPlayer5 = testPlayerList.get(4);
+        testPlayer6 = testPlayerList.get(5);
+        testPlayer7 = testPlayerList.get(6);
+        testPlayer8 = testPlayerList.get(7);
     }
 
     @Test
@@ -44,20 +43,6 @@ public class PlayerListTest {
         assertEquals("SFAT", testPlayer6.getName());
         assertEquals("Hungrybox", testPlayer7.getName());
         assertEquals("Leffen", testPlayer8.getName());
-
-        //        ArrayList<String> expectedList;
-//        expectedList.add("Mang0");
-//        expectedList.add("Zain");
-//        expectedList.add("Plup");
-//        expectedList.add("iBDW");
-//        expectedList.add("Wizzrobe");
-//        expectedList.add("SFAT");
-//        expectedList.add("Hungrybox");
-//        expectedList.add("Leffen");
-//
-//        for (Player player : list) {
-//
-//        }
     }
 
 
@@ -66,8 +51,7 @@ public class PlayerListTest {
         Player testPlayer9 = new Player("Barry", "Captain Falcon", "N/A", 9);
         assertTrue(testPlayerList.addPlayer(testPlayer9));
 
-        ArrayList<Player> list = testPlayerList.getPlayerList();
-        Player player = list.get(8);
+        Player player = testPlayerList.get(8);
         assertEquals("Barry", player.getName());
     }
 }

@@ -11,7 +11,7 @@ public class Player {
     private String name;
     private int wins;
     private int losses;
-    private float winRate;
+    private double winRate;
     private ArrayList<String> mainChars;
     private int rank;
     private int tournamentWins;
@@ -22,15 +22,17 @@ public class Player {
     // character(s) they play.
     public Player(String name, String characterOne, String characterTwo, int rank) {
         this.name = name;
-        // REDO these with helper functions
         wins = 0;
         losses = 0;
-        winRate = 0;
+        winRate = 0.00;
         this.mainChars = new ArrayList<>();
         mainChars.add(characterOne);
+
+        // to handle cases where player only plays one character
         if (!characterTwo.equals("N/A")) {
             mainChars.add(characterTwo);
         }
+
         this.rank = rank;
         tournamentWins = 0;
     }
@@ -38,54 +40,63 @@ public class Player {
     // REQUIRES:
     // MODIFIES: this
     // EFFECTS: add one win to player object and return number of wins.
+    //          updates winRate
     public int addWin() {
-        return 0; //stub
-        //TODO
+        wins = wins + 1;
+        updateWinRate();
+        return getWins(); //stub
+
     }
 
     // REQUIRES:
     // MODIFIES: this
     // EFFECTS: add one loss to player object and return number of losses.
+    //          updates winRate
     public int addLoss() {
-        return 0; //stub
-        //TODO
+        losses = losses + 1;
+        updateWinRate();
+        return getLosses();
     }
 
     // REQUIRES:
     // MODIFIES: this
-    // EFFECTS: changes wins to given integer
+    // EFFECTS: changes wins to given integer and update winRate
     public void setWins(int wins) {
-        //stub
-        //TODO
+        this.wins = wins;
+        updateWinRate();
     }
 
     // REQUIRES:
     // MODIFIES: this
     // EFFECTS: changes losses to given integer.
     public void setLosses(int losses) {
-        //stub
-        //TODO
+        this.losses = losses;
+        updateWinRate();
     }
 
 
-    //may not need this
+    // TODO for future
     // REQUIRES:
     // MODIFIES: this
     // EFFECTS: sets player rank
 //    public void setRank(int rank) {
 //        //stub
-//        //TODO
 //    }
 
     // REQUIRES:
     // MODIFIES: this
     // EFFECTS: recalculates winRate and returns new winRate.
     // (will need to account for division by 0)
-    private float updateWinRate() {
-        return 0; //stub
-        //TODO
-        // this.winRate = wins/losses;
-        // getWinRate();
+    private double updateWinRate() {
+        if (wins == 0) {
+            winRate = 0.00;
+        } else if (losses == 0) {
+            winRate = 1.00;
+        } else {
+            int total = wins + losses;
+            winRate = (double) wins / (double) total;
+        }
+        return winRate;
     }
 
     public String getName() {
@@ -100,7 +111,7 @@ public class Player {
         return losses;
     }
 
-    public float getWinRate() {
+    public double getWinRate() {
         return winRate;
     }
 

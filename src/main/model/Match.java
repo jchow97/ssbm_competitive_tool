@@ -1,37 +1,54 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Match {
 
     private Player playerOne;
     private Player playerTwo;
-    private String winner;
+    private Player winner;
     private String playerOneCharacter;
     private String playerTwoCharacter;
 
-    public Match(Player playerOne, String playerOneCharacter, Player playerTwo, String playerTwoCharacter) {
+    public Match(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
-        this.playerOneCharacter = playerOneCharacter;
+        ArrayList<String> playerOneChars = playerOne.getMainChars();
+        this.playerOneCharacter = playerOneChars.get(0);
 
         this.playerTwo = playerTwo;
-        this.playerTwoCharacter = playerTwoCharacter;
-        this.winner = "";
+        ArrayList<String> playerTwoChars = playerTwo.getMainChars();
+        this.playerTwoCharacter = playerTwoChars.get(0);
+
+        this.winner = null;
     }
 
     // REQUIRES: assumes no winner has been declared so far
     // (doesn't assume winner is p1 or p2, code will handle it).
     // MODIFIES: this
     // EFFECTS: declares who won the match.
-    public void declareWinner(String winner) {
-        //stub
-        //TODO
+    public boolean declareWinner(String winner) {
+        if (winner == playerOne.getName()) {
+            this.winner = playerOne;
+        } else if (winner == playerTwo.getName()) {
+            this.winner = playerTwo;
+        } else {
+            return false;
+        }
+        recordMatch();
+        return true;
     }
 
     // REQUIRES: winner has been declared
     // MODIFIES: Player, Tournament(?)
     // EFFECTS: processes the completed match; updates the record of players in match
     public void recordMatch() {
-        //stub
-        //TODO
+        if (winner == playerOne) {
+            playerOne.addWin();
+            playerTwo.addLoss();
+        } else {
+            playerTwo.addWin();
+            playerOne.addLoss();
+        }
     }
 
     // getter methods
@@ -43,7 +60,7 @@ public class Match {
         return playerTwo;
     }
 
-    public String getWinner() {
+    public Player getWinner() {
         return winner;
     }
 

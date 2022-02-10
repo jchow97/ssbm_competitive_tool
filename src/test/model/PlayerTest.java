@@ -26,7 +26,7 @@ class PlayerTest {
         assertEquals(0, testPlayer1.getWinRate());
         assertEquals(1, player1MainChars.size());
         assertEquals("Fox", player1MainChars.get(0));
-        assertEquals(-1, testPlayer1.getRank());
+        assertEquals(1, testPlayer1.getRank());
         assertEquals(0, testPlayer1.getTournamentWins());
 
 
@@ -38,7 +38,7 @@ class PlayerTest {
         assertEquals(2, player2MainChars.size());
         assertEquals("Peach", player2MainChars.get(0));
         assertEquals("Marth", player2MainChars.get(1));
-        assertEquals(-1, testPlayer2.getRank());
+        assertEquals(2, testPlayer2.getRank());
         assertEquals(0, testPlayer2.getTournamentWins());
     }
 
@@ -72,7 +72,7 @@ class PlayerTest {
         testPlayer1.setWins(10);
         assertEquals(10, testPlayer1.getWins());
         testPlayer1.setWins(2);
-        assertEquals(12, testPlayer1.getWins());
+        assertEquals(2, testPlayer1.getWins());
     }
 
     @Test
@@ -80,7 +80,7 @@ class PlayerTest {
         testPlayer1.setLosses(10);
         assertEquals(10, testPlayer1.getLosses());
         testPlayer1.setLosses(2);
-        assertEquals(12, testPlayer1.getLosses());
+        assertEquals(2, testPlayer1.getLosses());
     }
 
 //    @Test
@@ -98,7 +98,8 @@ class PlayerTest {
     void testWinRateChanges() {
         testPlayer1.setWins(6);
         assertEquals(1.00, testPlayer1.getWinRate());
-        testPlayer2.setLosses(4);
+
+        testPlayer1.setLosses(4);
         assertEquals(0.60, testPlayer1.getWinRate());
     }
 

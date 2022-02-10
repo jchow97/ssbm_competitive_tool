@@ -1,8 +1,12 @@
 package model;
 
 
+import java.util.ArrayList;
+
 public class Tournament {
     private static final int TOURNAMENT_SIZE = 8;
+
+    private PlayerList competitors;
 
     private Match quarterfinalMatch1;
     private Match quarterfinalMatch2;
@@ -11,42 +15,59 @@ public class Tournament {
     private Match semifinalMatch1;
     private Match semifinalMatch2;
     private Match grandFinalMatch;
-    private String winner;
+    private Player winner;
 
 
     // EFFECTS: construct an 8-player tournament, with 4 matches based on rankings.
     public Tournament() {
-        //TODO
+        competitors = new PlayerList();
+
+        quarterfinalMatch1 = new Match(competitors.get(0), competitors.get(7));
+        quarterfinalMatch2 = new Match(competitors.get(1), competitors.get(6));
+        quarterfinalMatch3 = new Match(competitors.get(2), competitors.get(5));
+        quarterfinalMatch4 = new Match(competitors.get(3), competitors.get(4));
+
+        winner = null;
     }
 
     // REQUIRES: grand final match to have a winner declared
     // MODIFIES: this
     // EFFECTS: declares a winner for the tournament and returns player.
     public Player declareWinner() {
-        // TODO
-        return null; //stub
+        winner = grandFinalMatch.getWinner();
+        return winner;
     }
 
+    //TODO for future deliverable.
     // REQUIRES:
     // MODIFIES: this
     // EFFECTS: creates the next round of matches in the tournament if current matches.
     // might be able to set to private (?)
-    public void nextRound() {
-        //TODO
-    }
+//    public void nextRound() {
+//
+//    }
 
     // REQUIRES: all quarterfinal matches have winners declared
     // MODIFIES: this
     // EFFECTS: creates the semifinal (top 4) matches in the tournament.
     public void setSemifinalRound() {
-        //TODO
+        Player quarterfinal1Winner = quarterfinalMatch1.getWinner();
+        Player quarterfinal2Winner = quarterfinalMatch2.getWinner();
+        Player quarterfinal3Winner = quarterfinalMatch3.getWinner();
+        Player quarterfinal4Winner = quarterfinalMatch4.getWinner();
+
+        semifinalMatch1 = new Match(quarterfinal1Winner, quarterfinal4Winner);
+        semifinalMatch2 = new Match(quarterfinal2Winner, quarterfinal3Winner);
     }
 
     // REQUIRES: all semifinal matches have winners declared
     // MODIFIES: this
     // EFFECTS: creates the final match in the tournament.
     public void setGrandFinalRound() {
-        // TODO
+        Player semifinal1Winner = semifinalMatch1.getWinner();
+        Player semifinal2Winner = semifinalMatch2.getWinner();
+
+        grandFinalMatch = new Match(semifinal1Winner, semifinal2Winner);
     }
 
     public Match getQuarterfinalMatch1() {
@@ -77,7 +98,7 @@ public class Tournament {
         return grandFinalMatch;
     }
 
-    public String getWinner() {
+    public Player getWinner() {
         return winner;
     }
 }

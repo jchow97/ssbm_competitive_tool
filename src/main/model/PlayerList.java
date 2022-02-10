@@ -15,14 +15,14 @@ public class PlayerList {
     private static final Player hbox = new Player("Hungrybox", 323, 69, ["Jigglypuff"]);
     private static final Player leffen = new Player("Leffen", 49, 3, ["Fox", "Sheik"]);*/
 
-    private static final Player mango = new Player("Mang0", "Falco", "Fox", 1);
-    private static final Player zain = new Player("Zain", "Marth", "Roy", 2);
-    private static final Player plup = new Player("Plup", "Sheik", "Fox", 3);
-    private static final Player ibdw = new Player("iBDW", "Fox", "N/A", 4);
-    private static final Player wizzrobe = new Player("Wizzrobe", "Captain Falcon", "N/A", 5);
-    private static final Player sfat = new Player("SFAT", "Fox", "N/A", 6);
-    private static final Player hbox = new Player("Hungrybox", "Jigglypuff", "N/A", 7);
-    private static final Player leffen = new Player("Leffen", "Fox", "Sheik", 8);
+    private Player mango = new Player("Mang0", "Falco", "Fox", 1);
+    private Player zain = new Player("Zain", "Marth", "Roy", 2);
+    private Player plup = new Player("Plup", "Sheik", "Fox", 3);
+    private Player ibdw = new Player("iBDW", "Fox", "N/A", 4);
+    private Player wizzrobe = new Player("Wizzrobe", "Captain Falcon", "N/A", 5);
+    private Player sfat = new Player("SFAT", "Fox", "N/A", 6);
+    private Player hbox = new Player("Hungrybox", "Jigglypuff", "N/A", 7);
+    private Player leffen = new Player("Leffen", "Fox", "Sheik", 8);
 
     private ArrayList<Player> playerList;
 
@@ -48,12 +48,15 @@ public class PlayerList {
 //    }
 
     public boolean addPlayer(Player player) {
-        //playerList.add(player);
-        return false; //stub
-        //TODO
+        playerList.add(player);
+        return true;
     }
 
     public ArrayList<Player> getPlayerList() {
         return playerList;
+    }
+
+    public Player get(int i) {
+        return playerList.get(i);
     }
 }
