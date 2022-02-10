@@ -59,4 +59,9 @@ public class PlayerList {
     public Player get(int i) {
         return playerList.get(i);
     }
+
+    public int size() {
+        ArrayList<Player> list = getPlayerList();
+        return list.size();
+    }
 }
