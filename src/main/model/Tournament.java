@@ -24,6 +24,7 @@ public class Tournament {
     // EFFECTS: declares a winner for the tournament and returns player.
     public Player declareWinner() {
         // TODO
+        return null; //stub
     }
 
     // REQUIRES:

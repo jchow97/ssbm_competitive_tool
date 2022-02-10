@@ -105,7 +105,7 @@ public class TournamentTest {
 
         testTournament.setGrandFinalRound();
 
-        testTournament.declareWinner("Plup");
+        testTournament.declareWinner();
 
         assertEquals(plup, testTournament.declareWinner());
     }
