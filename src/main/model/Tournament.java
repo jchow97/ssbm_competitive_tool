@@ -11,11 +11,19 @@ public class Tournament {
     private Match semifinalMatch1;
     private Match semifinalMatch2;
     private Match grandFinalMatch;
+    private String winner;
 
 
     // EFFECTS: construct an 8-player tournament, with 4 matches based on rankings.
     public Tournament() {
         //TODO
+    }
+
+    // REQUIRES: grand final match to have a winner declared
+    // MODIFIES: this
+    // EFFECTS: declares a winner for the tournament.
+    public void declareWinner() {
+        // TODO
     }
 
     // REQUIRES:
@@ -29,14 +37,14 @@ public class Tournament {
     // REQUIRES: all quarterfinal matches have winners declared
     // MODIFIES: this
     // EFFECTS: creates the semifinal (top 4) matches in the tournament.
-    private void setSemifinalRound() {
+    public void setSemifinalRound() {
         //TODO
     }
 
     // REQUIRES: all semifinal matches have winners declared
     // MODIFIES: this
     // EFFECTS: creates the final match in the tournament.
-    private void setGrandFinalRound() {
+    public void setGrandFinalRound() {
         // TODO
     }
 
@@ -66,5 +74,9 @@ public class Tournament {
 
     public Match getGrandFinalMatch() {
         return grandFinalMatch;
+    }
+
+    public String getWinner() {
+        return winner;
     }
 }
