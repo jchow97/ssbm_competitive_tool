@@ -5,7 +5,7 @@
 What does the application do?
 
 This is an application tool for the competitive E-sports game Super Smash Bros. Melee. The
-aims of this application are to:
+ultimate aims of this application are to:
 
 1. Track tournament results of my favourite competitive Super Smash Bros. Melee competitors.
 2. Rank competitors by recent performance in the past year.
@@ -26,7 +26,9 @@ run tournaments more smoothly. Additionally, the player statistics can be used b
 members to evaluate player performance and use the data to formulate their own player rankings.
 
 ## User stories:
-- As a user, I want to be able to create a 32-player tournament bracket based on player rankings.
+- As a user, I want to be able to create an 8-player tournament bracket.
+- As a user, I want to be able to progress through the tournament bracket.
 - As a user, I want to be able to add a new player to the player database.
-- As a user, I want to be able to view the head-to-head statistics of two players.
-- As a user, I want to be able to view the ranking of 32 players based on their performances in the past year.
+- As a user, I want to be able to view the player database, with basic statistics.
+- As a user, I want to be able to search for a player in the database, and retrieve statistics.
+- As a user, I want to be able to see tournament results reflected in the player database (not 100% working as intended yet).

@@ -3,22 +3,15 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 public class TournamentTest {
-    //TODO look at the lab4 import of static variables to try to get rid of this block below
-
     Tournament testTournament;
-
-//    private Player mango = new Player("Mang0", "Falco", "Fox", 1);
-//    private Player zain = new Player("Zain", "Marth", "Roy", 2);
-//    private Player plup = new Player("Plup", "Sheik", "Fox", 3);
-//    private Player ibdw = new Player("iBDW", "Fox", "N/A", 4);
-//    private Player wizzrobe = new Player("Wizzrobe", "Captain Falcon", "N/A", 5);
-//    private Player sfat = new Player("SFAT", "Fox", "N/A", 6);
-//    private Player hbox = new Player("Hungrybox", "Jigglypuff", "N/A", 7);
-//    private Player leffen = new Player("Leffen", "Fox", "Sheik", 8);
 
     private Match quarterfinal1;
     private Match quarterfinal2;
@@ -33,10 +26,13 @@ public class TournamentTest {
     @BeforeEach
     void runBefore() {
         testTournament = new Tournament();
-        quarterfinal1 = testTournament.getQuarterfinalMatch1();
-        quarterfinal2 = testTournament.getQuarterfinalMatch2();
-        quarterfinal3 = testTournament.getQuarterfinalMatch3();
-        quarterfinal4 = testTournament.getQuarterfinalMatch4();
+        ArrayList<Match> quarterfinalMatches = testTournament.getQuarterfinalMatches();
+
+
+        quarterfinal1 = quarterfinalMatches.get(0);
+        quarterfinal2 = quarterfinalMatches.get(1);
+        quarterfinal3 = quarterfinalMatches.get(2);
+        quarterfinal4 = quarterfinalMatches.get(3);
         quarterfinal1.declareWinner("Mang0");
         quarterfinal2.declareWinner("Zain");
         quarterfinal3.declareWinner("Plup");
@@ -47,10 +43,8 @@ public class TournamentTest {
     void testConstructor() {
         testPlayer = quarterfinal1.getPlayerOne();
         assertEquals("Mang0", testPlayer.getName());
-        //assertEquals("Falco", quarterfinal1.getPlayerOneCharacter());
         testPlayer = quarterfinal1.getPlayerTwo();
         assertEquals("Leffen", testPlayer.getName());
-        //assertEquals("Fox", quarterfinal1.getPlayerTwoCharacter());
 
         testPlayer = quarterfinal2.getPlayerOne();
         assertEquals("Zain", testPlayer.getName());
@@ -59,22 +53,23 @@ public class TournamentTest {
 
         testPlayer = quarterfinal3.getPlayerOne();
         assertEquals("Plup", testPlayer.getName());
+        testPlayer = quarterfinal3.getPlayerTwo();
+        assertEquals("SFAT", testPlayer.getName());
 
         testPlayer = quarterfinal4.getPlayerOne();
         assertEquals("iBDW", testPlayer.getName());
+        testPlayer = quarterfinal4.getPlayerTwo();
+        assertEquals("Wizzrobe", testPlayer.getName());
 
-        assertEquals(null, testTournament.getWinner());
+        assertNull(testTournament.getWinner());
     }
-
-//    @Test
-//    void testSetNextRound() {
-//    }
 
     @Test
     void testSetSemifinal() {
         testTournament.setSemifinalRound();
-        semiFinal1 = testTournament.getSemifinalMatch1();
-        semiFinal2 = testTournament.getSemifinalMatch2();
+        ArrayList<Match> semifinalMatches = testTournament.getSemifinalMatches();
+        semiFinal1 = semifinalMatches.get(0);
+        semiFinal2 = semifinalMatches.get(1);
 
         testPlayer = semiFinal1.getPlayerOne();
         assertEquals("Mang0", testPlayer.getName());
@@ -94,8 +89,9 @@ public class TournamentTest {
     @Test
     void testSetGrandFinal() {
         testTournament.setSemifinalRound();
-        semiFinal1 = testTournament.getSemifinalMatch1();
-        semiFinal2 = testTournament.getSemifinalMatch2();
+        ArrayList<Match> semifinalMatches = testTournament.getSemifinalMatches();
+        semiFinal1 = semifinalMatches.get(0);
+        semiFinal2 = semifinalMatches.get(1);
 
         semiFinal1.declareWinner("Mang0");
         semiFinal2.declareWinner("Plup");
@@ -106,17 +102,16 @@ public class TournamentTest {
 
         testPlayer = grandFinal.getPlayerOne();
         assertEquals("Mang0", testPlayer.getName());
-        //assertEquals("Falco", grandFinal.getPlayerOneCharacter());
         testPlayer = grandFinal.getPlayerTwo();
         assertEquals("Plup", testPlayer.getName());
-        //assertEquals("Sheik", grandFinal.getPlayerTwoCharacter());
     }
 
     @Test
     void testDeclareWinner() {
         testTournament.setSemifinalRound();
-        semiFinal1 = testTournament.getSemifinalMatch1();
-        semiFinal2 = testTournament.getSemifinalMatch2();
+        ArrayList<Match> semifinalMatches = testTournament.getSemifinalMatches();
+        semiFinal1 = semifinalMatches.get(0);
+        semiFinal2 = semifinalMatches.get(1);
 
         semiFinal1.declareWinner("Mang0");
         semiFinal2.declareWinner("Plup");
@@ -129,6 +124,13 @@ public class TournamentTest {
         testWinner = testTournament.declareWinner();
 
         assertEquals("Plup", testWinner.getName());
+    }
+
+    @Test
+    void testGetCompetitors() {
+        PlayerList testPlayers = testTournament.getCompetitors();
+        Player player = testPlayers.get(0);
+        assertEquals("Mang0", player.getName());
     }
 
 }

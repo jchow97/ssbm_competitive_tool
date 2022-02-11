@@ -4,62 +4,48 @@ import java.util.ArrayList;
 
 public class PlayerList {
 
-/*  Potentially for future use: Player objects with win/loss results of the past year
-
-    private static final Player mango = new Player("Mang0", 45, 14, ["Falco", "Fox"]);
-    private static final Player zain = new Player("Zain", 136, 36, ["Marth"]);
-    private static final Player plup = new Player("Plup", 61, 10, ["Sheik", "Fox"]);
-    private static final Player ibdw = new Player("iBDW", 105, 26, ["Fox"]);
-    private static final Player wizzrobe = new Player("Wizzrobe", 62, 18, ["Captain Falcon"]);
-    private static final Player sfat = new Player("SFAT", 130, 39, ["Fox"]);
-    private static final Player hbox = new Player("Hungrybox", 323, 69, ["Jigglypuff"]);
-    private static final Player leffen = new Player("Leffen", 49, 3, ["Fox", "Sheik"]);*/
-
-    private Player mango = new Player("Mang0", "Falco", "Fox", 1);
-    private Player zain = new Player("Zain", "Marth", "Roy", 2);
-    private Player plup = new Player("Plup", "Sheik", "Fox", 3);
-    private Player ibdw = new Player("iBDW", "Fox", "N/A", 4);
-    private Player wizzrobe = new Player("Wizzrobe", "Captain Falcon", "N/A", 5);
-    private Player sfat = new Player("SFAT", "Fox", "N/A", 6);
-    private Player hbox = new Player("Hungrybox", "Jigglypuff", "N/A", 7);
-    private Player leffen = new Player("Leffen", "Fox", "Sheik", 8);
-
     private ArrayList<Player> playerList;
 
     // EFFECTS: constructs an empty player list
     public PlayerList() {
         playerList = new ArrayList<>();
+        Player mango = new Player("Mang0", "Falco", "Fox", 1);
         playerList.add(mango);
+        Player zain = new Player("Zain", "Marth", "Roy", 2);
         playerList.add(zain);
+        Player plup = new Player("Plup", "Sheik", "Fox", 3);
         playerList.add(plup);
+        Player ibdw = new Player("iBDW", "Fox", "N/A", 4);
         playerList.add(ibdw);
+        Player wizzrobe = new Player("Wizzrobe", "Captain Falcon", "N/A", 5);
         playerList.add(wizzrobe);
+        Player sfat = new Player("SFAT", "Fox", "N/A", 6);
         playerList.add(sfat);
+        Player hbox = new Player("Hungrybox", "Jigglypuff", "N/A", 7);
         playerList.add(hbox);
+        Player leffen = new Player("Leffen", "Fox", "Sheik", 8);
         playerList.add(leffen);
     }
 
-    // REQUIRES: non-empty list of players
+    // REQUIRES:
     // MODIFIES: this
-    // EFFECTS: updates players to reflect current ranking.
-    // TODO for future deliverable.
-//    public ArrayList<Player> updateRanks() {
-//        return null; //stub
-//    }
-
+    // EFFECTS: adds a new player to the player list
     public boolean addPlayer(Player player) {
         playerList.add(player);
         return true;
     }
 
+    // EFFECTS returns the entire playerlist as an ArrayList.
     public ArrayList<Player> getPlayerList() {
         return playerList;
     }
 
+    // EFFECTS: returns the player at the given position in the list
     public Player get(int i) {
         return playerList.get(i);
     }
 
+    // EFFECTS: returns the size of the player list.
     public int size() {
         ArrayList<Player> list = getPlayerList();
         return list.size();

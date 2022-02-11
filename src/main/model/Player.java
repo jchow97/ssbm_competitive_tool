@@ -16,8 +16,6 @@ public class Player {
     private int rank;
     private int tournamentWins;
 
-    // REQUIRES:
-    // MODIFIES:
     // EFFECTS: constructs a player with a given initial name, and
     // character(s) they play.
     public Player(String name, String characterOne, String characterTwo, int rank) {
@@ -28,7 +26,7 @@ public class Player {
         this.mainChars = new ArrayList<>();
         mainChars.add(characterOne);
 
-        // to handle cases where player only plays one character
+        // handles cases where player only plays one character
         if (!characterTwo.equals("N/A")) {
             mainChars.add(characterTwo);
         }
@@ -39,7 +37,7 @@ public class Player {
 
     // REQUIRES:
     // MODIFIES: this
-    // EFFECTS: add one win to player object and return number of wins.
+    // EFFECTS: add one win to player object and return number of wins and
     //          updates winRate
     public int addWin() {
         wins = wins + 1;
@@ -50,7 +48,7 @@ public class Player {
 
     // REQUIRES:
     // MODIFIES: this
-    // EFFECTS: add one loss to player object and return number of losses.
+    // EFFECTS: add one loss to player object and return number of losses and
     //          updates winRate
     public int addLoss() {
         losses = losses + 1;
@@ -74,19 +72,9 @@ public class Player {
         updateWinRate();
     }
 
-
-    // TODO for future
     // REQUIRES:
     // MODIFIES: this
-    // EFFECTS: sets player rank
-//    public void setRank(int rank) {
-//        //stub
-//    }
-
-    // REQUIRES:
-    // MODIFIES: this
-    // EFFECTS: recalculates winRate and returns new winRate.
-    // (will need to account for division by 0)
+    // EFFECTS: recalculates and returns new winRate.
     private double updateWinRate() {
         if (wins == 0) {
             winRate = 0.00;
@@ -99,30 +87,37 @@ public class Player {
         return winRate;
     }
 
+    // EFFECTS: returns player's name.
     public String getName() {
         return name;
     }
 
+    // EFFECTS: returns player's wins.
     public int getWins() {
         return wins;
     }
 
+    // EFFECTS: returns player's losses
     public int getLosses() {
         return losses;
     }
 
+    // EFFECTS: returns player's win rate.
     public double getWinRate() {
         return winRate;
     }
 
+    // EFFECTS: returns player's character list.
     public ArrayList<String> getMainChars() {
         return mainChars;
     }
 
+    // EFFECTS: returns player's current rank
     public int getRank() {
         return rank;
     }
 
+    // EFFECTS: returns the player's tournament wins.
     public int getTournamentWins() {
         return tournamentWins;
     }

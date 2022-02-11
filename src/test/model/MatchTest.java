@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchTest {
-    //TODO
     private Match testMatch1;
     private Player testPlayer1;
     private Player testPlayer2;
@@ -29,16 +28,12 @@ public class MatchTest {
     @Test
     void testConstructor() {
         assertEquals(testPlayer1, testMatch1.getPlayerOne());
-        //assertEquals("Fox", testMatch1.getPlayerOneCharacter());
         assertEquals(testPlayer2, testMatch1.getPlayerTwo());
-        //assertEquals("Peach", testMatch1.getPlayerTwoCharacter());
-        assertEquals(null, testMatch1.getWinner());
+        assertNull(testMatch1.getWinner());
 
         assertEquals(testPlayer3, testMatch2.getPlayerOne());
-        //assertEquals("Falco", testMatch2.getPlayerOneCharacter());
         assertEquals(testPlayer4, testMatch2.getPlayerTwo());
-        //assertEquals("Sheik", testMatch2.getPlayerTwoCharacter());
-        assertEquals(null, testMatch2.getWinner());
+        assertNull(testMatch2.getWinner());
     }
 
     @Test
@@ -49,7 +44,7 @@ public class MatchTest {
 
         //does not add if given string is not one of the players
         assertFalse(testMatch2.declareWinner("Bart"));
-        assertEquals(null, testMatch2.getWinner());
+        assertNull(testMatch2.getWinner());
     }
 
     @Test

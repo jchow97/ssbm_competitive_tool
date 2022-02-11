@@ -8,20 +8,21 @@ import model.Tournament;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// Super Smash Bros. Melee Application
+// Competitive Super Smash Bros. Melee Application
 public class MeleeApp {
     private Scanner input;
     private PlayerList playerList;
-    private Tournament tournament;
 
+    // Code based after TellerApp's ui TellerApp code.
     // EFFECTS: runs the Melee application
     public MeleeApp() {
         runMelee();
     }
 
-    // code based after TellerApp's ui TellerApp code.
+    // Code based after TellerApp's ui TellerApp code.
     // MODIFIES: this
-    // EFFECTS: processes user input
+    // EFFECTS: initializes the UI and displays the main menu.
+    // acts as the starting branch for the application.
     private void runMelee() {
         boolean keepGoing = true;
         String command;
@@ -43,7 +44,8 @@ public class MeleeApp {
         System.out.println("\nGoodbye!");
     }
 
-    // EFFECTS: initializes 8-player list.
+    // MODIFIES: this
+    // EFFECTS: initializes 8-player list and scanner for inputs.
     private void init() {
         playerList = new PlayerList();
         input = new Scanner(System.in);
@@ -61,8 +63,9 @@ public class MeleeApp {
         System.out.println("\tq -> Quit");
     }
 
+    // Code adapted from TellerApp UI.
     // MODIFIES: this
-    // EFFECTS: process user command
+    // EFFECTS: process user command from display menu.
     private void processCommand(String command) {
         if (command.equals("v")) {
             //display player rankings
@@ -79,6 +82,7 @@ public class MeleeApp {
             displayAddPlayer();
         } else {
             System.out.println("Invalid command. Please try again.");
+            processCommand(command);
         }
     }
 
@@ -97,9 +101,14 @@ public class MeleeApp {
                         player.getWins(), player.getLosses(), characters.get(0), "--");
             }
         }
+
+        System.out.println("Press any key to return to main menu.");
+        input.next();
+        System.out.println("Returning to Main Menu.");
     }
 
-    // EFFECTS: prints tournament bracket onto console
+    // MODIFIES: this
+    // EFFECTS: prints tournament bracket with original 8 players onto console
     private PlayerList runTournament() {
         Tournament tournament = new Tournament();
         System.out.println("THE BIGGEST BADDEST TOURNAMENT EVER");
@@ -131,6 +140,7 @@ public class MeleeApp {
         return tournament.getCompetitors();
     }
 
+    // EFFECTS: prints the quarterfinal match ups onto console.
     private void displayQuarterfinals(Tournament tournament) {
         ArrayList<Match> quarterfinalMatches = tournament.getQuarterfinalMatches();
         System.out.println("QUARTERFINALS");
@@ -146,14 +156,18 @@ public class MeleeApp {
         }
     }
 
+    // REQUIRES: intended inputs only. For example, must not get matches mixed up.
+    // Cannot declare a player from another match as the winner.
+    // MODIFIES: this, Tournament, Match, Player
+    // EFFECTS: processes the quarterfinal match ups based on player input.
     private Tournament runQuarterfinals(Tournament tournament) {
         ArrayList<Match> matches = tournament.getQuarterfinalMatches();
         for (int i = 0; i < 4; i++) {
             Match match = matches.get(i);
             int matchNumber = i + 1;
-            System.out.printf("Who won quarterfinal match %d?\n", matchNumber);
+            System.out.printf("\nWho won quarterfinal match %d?\n", matchNumber);
             String winner = input.next();
-            while (match.declareWinner(winner) == false) {
+            while (!match.declareWinner(winner)) {
                 System.out.println("Invalid name. Please try again. Who won the match?");
                 winner = input.next();
                 match.declareWinner(winner);
@@ -162,6 +176,7 @@ public class MeleeApp {
         return tournament;
     }
 
+    // EFFECTS: prints the semifinal match ups onto console.
     private void displaySemifinals(Tournament tournament) {
         ArrayList<Match> semifinalMatches = tournament.getSemifinalMatches();
         System.out.println("SEMIFINALS");
@@ -177,6 +192,10 @@ public class MeleeApp {
         }
     }
 
+    // REQUIRES: intended inputs only. For example, must not get matches mixed up.
+    // Cannot declare a player from another match as the winner.
+    // MODIFIES: this, Tournament, Match, Player
+    // EFFECTS: processes the semifinal match ups based on player input.
     private Tournament runSemifinals(Tournament tournament) {
         ArrayList<Match> matches = tournament.getSemifinalMatches();
         for (int i = 0; i < 2; i++) {
@@ -189,6 +208,7 @@ public class MeleeApp {
         return tournament;
     }
 
+    // EFFECTS: prints the final match ups onto console.
     private void displayFinalRound(Match finalMatch) {
         System.out.println("FINALS");
         Player playerOne = finalMatch.getPlayerOne();
@@ -198,6 +218,9 @@ public class MeleeApp {
         System.out.printf("%-10s\n", playerTwo.getName());
     }
 
+    // REQUIRES: Intended inputs only. Only declare one of the players as winners.
+    // MODIFIES: this, Tournament, Match, Player
+    // EFFECTS: processes the final match ups based on player input.
     private Tournament runFinals(Tournament tournament) {
         Match match = tournament.getGrandFinalMatch();
         System.out.println("Who won the final match?\n");
@@ -208,14 +231,15 @@ public class MeleeApp {
     }
 
     // EFFECTS: prints search prompt onto console, prints player stats if found
+    // else, re-prompts user for another player input or return to menu.
     private void displaySearch() {
         boolean search = true;
-        while (search == true) {
+        while (search) {
             System.out.println("What is the name of the player you are looking for? (Case sensitive)");
             String name = input.next();
             search = searchPlayer(name);
 
-            if (search == true) {
+            if (search) {
                 System.out.println("Sorry, there is no player with that name.");
             }
 
@@ -232,12 +256,13 @@ public class MeleeApp {
         }
     }
 
+    // EFFECTS: searches list of players for given name. Name needs to be exact for a match
+    // to be found.
     private boolean searchPlayer(String name) {
         ArrayList<Player> playerListForSearch = playerList.getPlayerList();
         for (Player player: playerListForSearch) {
             if (name.equals(player.getName())) {
                 ArrayList<String> characters = player.getMainChars();
-                // TODO: substring search
                 System.out.printf("%s's Stats:", player.getName());
                 if (characters.size() == 2) {
                     System.out.printf("\nRank: %-4d %-10s Wins: %-7d Losses: %-7d Characters: %s, %s\n",
@@ -254,15 +279,16 @@ public class MeleeApp {
         return true;
     }
 
+    // MODIFIES: this
     // EFFECTS: prompts user through adding data for a new player.
     private void displayAddPlayer() {
         System.out.println("What is the name of the player you would like to add?");
         String player = input.next();
 
-        System.out.println("How many wins do they have?");
+        System.out.println("How many wins do they have? Please only provide numbers.");
         int wins = input.nextInt();
 
-        System.out.println("How many losses do they have?");
+        System.out.println("How many losses do they have? Please only provide numbers.");
         int losses = input.nextInt();
 
         ArrayList<String> characters = new ArrayList<>();
@@ -272,7 +298,7 @@ public class MeleeApp {
             System.out.println("How many characters do they play?");
             int characterCount = input.nextInt();
             if (characterCount == 1 || characterCount == 2) {
-                characters = addCharacters(player, wins, losses, characterCount);
+                characters = addCharacters(characterCount);
                 invalidValue = false;
             } else {
                 System.out.println("Invalid. Please pick between 1 or 2.");
@@ -286,8 +312,9 @@ public class MeleeApp {
         playerList.addPlayer(newPlayer);
     }
 
-    // EFFECTS: collect characters to add to list of characters.
-    private ArrayList<String> addCharacters(String player, int wins, int losses, int characterCount) {
+
+    // EFFECTS: helper function for handling adding 1 or 2 character(s) to list of characters.
+    private ArrayList<String> addCharacters(int characterCount) {
         String characterOne;
         String characterTwo;
         ArrayList<String> characterList = new ArrayList<>();

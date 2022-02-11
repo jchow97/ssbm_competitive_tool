@@ -50,8 +50,23 @@ public class PlayerListTest {
     void testAddPlayer() {
         Player testPlayer9 = new Player("Barry", "Captain Falcon", "N/A", 9);
         assertTrue(testPlayerList.addPlayer(testPlayer9));
+        assertEquals(9, testPlayerList.size());
 
         Player player = testPlayerList.get(8);
         assertEquals("Barry", player.getName());
+    }
+
+    @Test
+    void testGetPlayerList() {
+        ArrayList <Player> expectedList = new ArrayList<>();
+        expectedList.add(testPlayer1);
+        expectedList.add(testPlayer2);
+        expectedList.add(testPlayer3);
+        expectedList.add(testPlayer4);
+        expectedList.add(testPlayer5);
+        expectedList.add(testPlayer6);
+        expectedList.add(testPlayer7);
+        expectedList.add(testPlayer8);
+        assertEquals(expectedList, testPlayerList.getPlayerList());
     }
 }
