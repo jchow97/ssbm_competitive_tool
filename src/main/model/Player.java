@@ -3,9 +3,7 @@ package model;
 
 import java.util.ArrayList;
 
-// may need to rethink how to manipulate rank among players. Potential for data structure implementation here.
-// need a DS that is good at search, and perhaps re-arranging (?).
-
+// Represents a competitive Player.
 public class Player {
 
     private String name;

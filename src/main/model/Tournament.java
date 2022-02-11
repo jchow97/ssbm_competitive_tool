@@ -3,6 +3,7 @@ package model;
 
 import java.util.ArrayList;
 
+// Represents a Tournament consisting of 8 players.
 public class Tournament {
 
     private PlayerList competitors = new PlayerList();

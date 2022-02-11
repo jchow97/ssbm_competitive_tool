@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+// Represents a list of Competitive Players
 public class PlayerList {
 
     private ArrayList<Player> playerList;

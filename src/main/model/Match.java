@@ -1,5 +1,6 @@
 package model;
 
+// Represents a match between players.
 public class Match {
 
     private final Player playerOne;
