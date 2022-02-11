@@ -29,15 +29,15 @@ public class MatchTest {
     @Test
     void testConstructor() {
         assertEquals(testPlayer1, testMatch1.getPlayerOne());
-        assertEquals("Fox", testMatch1.getPlayerOneCharacter());
+        //assertEquals("Fox", testMatch1.getPlayerOneCharacter());
         assertEquals(testPlayer2, testMatch1.getPlayerTwo());
-        assertEquals("Peach", testMatch1.getPlayerTwoCharacter());
+        //assertEquals("Peach", testMatch1.getPlayerTwoCharacter());
         assertEquals(null, testMatch1.getWinner());
 
         assertEquals(testPlayer3, testMatch2.getPlayerOne());
-        assertEquals("Falco", testMatch2.getPlayerOneCharacter());
+        //assertEquals("Falco", testMatch2.getPlayerOneCharacter());
         assertEquals(testPlayer4, testMatch2.getPlayerTwo());
-        assertEquals("Sheik", testMatch2.getPlayerTwoCharacter());
+        //assertEquals("Sheik", testMatch2.getPlayerTwoCharacter());
         assertEquals(null, testMatch2.getWinner());
     }
 

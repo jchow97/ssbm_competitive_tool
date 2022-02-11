@@ -1,7 +1,9 @@
 package ui;
 
+import model.Match;
 import model.Player;
 import model.PlayerList;
+import model.Tournament;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -10,6 +12,7 @@ import java.util.Scanner;
 public class MeleeApp {
     private Scanner input;
     private PlayerList playerList;
+    private Tournament tournament;
 
     // EFFECTS: runs the Melee application
     public MeleeApp() {
@@ -21,7 +24,7 @@ public class MeleeApp {
     // EFFECTS: processes user input
     private void runMelee() {
         boolean keepGoing = true;
-        String command = null;
+        String command;
 
         init();
 
@@ -67,7 +70,7 @@ public class MeleeApp {
         } else if (command.equals("t")) {
             //display tournament viewer
             //display Match 1 details
-            displayTournament();
+            playerList = runTournament();
         } else if (command.equals("s")) {
             //ask for player name
             displaySearch();
@@ -75,8 +78,7 @@ public class MeleeApp {
             //ask for player details.
             displayAddPlayer();
         } else {
-            //invalid input message.
-            //TODO
+            System.out.println("Invalid command. Please try again.");
         }
     }
 
@@ -94,68 +96,165 @@ public class MeleeApp {
                 System.out.printf("%-4d %-10s %-7d %-7d %-20s %-20s\n", player.getRank(), player.getName(),
                         player.getWins(), player.getLosses(), characters.get(0), "--");
             }
-
-            //TODO add next input line
         }
-
     }
 
     // EFFECTS: prints tournament bracket onto console
-    private void displayTournament() {
-        System.out.println("TOURNAMENT");
-        System.out.println("\n---------------------------------------------------------------------------------");
-        //TODO
+    private PlayerList runTournament() {
+        Tournament tournament = new Tournament();
+        System.out.println("THE BIGGEST BADDEST TOURNAMENT EVER");
+
+        displayQuarterfinals(tournament);
+        tournament = runQuarterfinals(tournament);
+
+        tournament.setSemifinalRound();
+        displaySemifinals(tournament);
+        tournament = runSemifinals(tournament);
+
+        tournament.setGrandFinalRound();
+        Match finals = tournament.getGrandFinalMatch();
+        displayFinalRound(finals);
+        tournament = runFinals(tournament);
+
+        Player tournamentWinner = tournament.getWinner();
+        System.out.printf("%s won the tournament!\n", tournamentWinner.getName());
+
+        System.out.println("t -> Run another tournament.");
+        System.out.println("Press any key to return to main menu.");
+        String command = input.next();
+        command.toLowerCase();
+        if (command.equals("t")) {
+            runTournament();
+        } else {
+            System.out.println("Returning to Main Menu.");
+        }
+        return tournament.getCompetitors();
+    }
+
+    private void displayQuarterfinals(Tournament tournament) {
+        ArrayList<Match> quarterfinalMatches = tournament.getQuarterfinalMatches();
+        System.out.println("QUARTERFINALS");
+        for (int i = 0; i < 4; i++) {
+            int matchNumber = i + 1;
+            System.out.printf("\nMatch %d", matchNumber);
+            Match match = quarterfinalMatches.get(i);
+            Player playerOne = match.getPlayerOne();
+            Player playerTwo = match.getPlayerTwo();
+            System.out.printf("\n%-10s", playerOne.getName());
+            System.out.println("\nvs");
+            System.out.printf("%-10s\n", playerTwo.getName());
+        }
+    }
+
+    private Tournament runQuarterfinals(Tournament tournament) {
+        ArrayList<Match> matches = tournament.getQuarterfinalMatches();
+        for (int i = 0; i < 4; i++) {
+            Match match = matches.get(i);
+            int matchNumber = i + 1;
+            System.out.printf("Who won quarterfinal match %d?\n", matchNumber);
+            String winner = input.next();
+            while (match.declareWinner(winner) == false) {
+                System.out.println("Invalid name. Please try again. Who won the match?");
+                winner = input.next();
+                match.declareWinner(winner);
+            }
+        }
+        return tournament;
+    }
+
+    private void displaySemifinals(Tournament tournament) {
+        ArrayList<Match> semifinalMatches = tournament.getSemifinalMatches();
+        System.out.println("SEMIFINALS");
+        for (int i = 0; i < 2; i++) {
+            int matchNumber = i + 1;
+            System.out.printf("\nMatch %d", matchNumber);
+            Match match = semifinalMatches.get(i);
+            Player playerOne = match.getPlayerOne();
+            Player playerTwo = match.getPlayerTwo();
+            System.out.printf("\n%-10s", playerOne.getName());
+            System.out.println("\nvs");
+            System.out.printf("%-10s\n", playerTwo.getName());
+        }
+    }
+
+    private Tournament runSemifinals(Tournament tournament) {
+        ArrayList<Match> matches = tournament.getSemifinalMatches();
+        for (int i = 0; i < 2; i++) {
+            Match match = matches.get(i);
+            int matchNumber = i + 1;
+            System.out.printf("Who won semifinal match %d?\n", matchNumber);
+            String winner = input.next();
+            match.declareWinner(winner); //should incorporate a return value to check for invalid names
+        }
+        return tournament;
+    }
+
+    private void displayFinalRound(Match finalMatch) {
+        System.out.println("FINALS");
+        Player playerOne = finalMatch.getPlayerOne();
+        Player playerTwo = finalMatch.getPlayerTwo();
+        System.out.printf("\n%-10s", playerOne.getName());
+        System.out.println("\nvs");
+        System.out.printf("%-10s\n", playerTwo.getName());
+    }
+
+    private Tournament runFinals(Tournament tournament) {
+        Match match = tournament.getGrandFinalMatch();
+        System.out.println("Who won the final match?\n");
+        String winner = input.next();
+        match.declareWinner(winner);
+        tournament.declareWinner();
+        return tournament;
     }
 
     // EFFECTS: prints search prompt onto console, prints player stats if found
     private void displaySearch() {
-
         boolean search = true;
         while (search == true) {
             System.out.println("What is the name of the player you are looking for? (Case sensitive)");
             String name = input.next();
-            ArrayList<Player> playerListForSearch = playerList.getPlayerList();
-
-            for (Player player: playerListForSearch) {
-                if (name.equals(player.getName())) {
-                    ArrayList<String> characters = player.getMainChars();
-                    // TODO: substring search
-                    System.out.printf("%s's Stats:", player.getName());
-                    if (characters.size() == 2) {
-                        System.out.printf("%-4d %-10s %-7d %-7d %-20s %-20s\n", player.getRank(), player.getName(),
-                                player.getWins(), player.getLosses(), characters.get(0), characters.get(1));
-                    } else {
-                        System.out.printf("%-4d %-10s %-7d %-7d %-20s %-20s\n", player.getRank(), player.getName(),
-                                player.getWins(), player.getLosses(), characters.get(0), "--");
-                    }
-                    search = false;
-                    break;
-                    // TODO haven't gotten it to work yet. While loops could be very helpful.
-                }
-            }
+            search = searchPlayer(name);
 
             if (search == true) {
                 System.out.println("Sorry, there is no player with that name.");
             }
-            search = false;
 
-            System.out.println("\nm -> Return to main menu.");
-            System.out.println("\ns -> Search for another player.");
+            System.out.println("s -> Search for another player.");
+            System.out.println("Press any key to return to main menu.");
             String command = input.next();
             command = command.toLowerCase();
 
-            if (command.equals("m")) {
-                continue;
-            } else if (command.equals("s")) {
+            if (command.equals("s")) {
                 displaySearch();
             } else {
-                System.out.println("Invalid input. Returning to Main Menu.");
+                System.out.println("Returning to Main Menu.");
             }
         }
     }
 
+    private boolean searchPlayer(String name) {
+        ArrayList<Player> playerListForSearch = playerList.getPlayerList();
+        for (Player player: playerListForSearch) {
+            if (name.equals(player.getName())) {
+                ArrayList<String> characters = player.getMainChars();
+                // TODO: substring search
+                System.out.printf("%s's Stats:", player.getName());
+                if (characters.size() == 2) {
+                    System.out.printf("\nRank: %-4d %-10s Wins: %-7d Losses: %-7d Characters: %s, %s\n",
+                            player.getRank(), player.getName(), player.getWins(),
+                            player.getLosses(), characters.get(0), characters.get(1));
+                } else {
+                    System.out.printf("\nRank: %-4d %-10s Wins: %-7d Losses: %-7d Characters: %s %s\n",
+                            player.getRank(), player.getName(), player.getWins(),
+                            player.getLosses(), characters.get(0), "--");
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
     // EFFECTS: prompts user through adding data for a new player.
-    // TODO add regex
     private void displayAddPlayer() {
         System.out.println("What is the name of the player you would like to add?");
         String player = input.next();
@@ -166,44 +265,47 @@ public class MeleeApp {
         System.out.println("How many losses do they have?");
         int losses = input.nextInt();
 
+        ArrayList<String> characters = new ArrayList<>();
+
         boolean invalidValue = true;
-        int characters;
-        String characterOne;
-        String characterTwo;
-        while (invalidValue == true) {
+        while (invalidValue) {
             System.out.println("How many characters do they play?");
-            characters = input.nextInt();
-            //TODO restrict to character pool in the future.
-            //TODO create helper function here
-            if (characters == 1) {
-                System.out.println("What is their character?");
-                characterOne = input.next();
-                int lowestRank = playerList.size() + 1;
-                Player newPlayer =  new Player(player, characterOne, "N/A", lowestRank);
-                newPlayer.setWins(wins);
-                newPlayer.setLosses(losses);
-                playerList.addPlayer(newPlayer);
+            int characterCount = input.nextInt();
+            if (characterCount == 1 || characterCount == 2) {
+                characters = addCharacters(player, wins, losses, characterCount);
                 invalidValue = false;
-            } else if (characters == 2) {
-                System.out.println("What is their first character?");
-                characterOne = input.next();
-                System.out.println("What is their second character?");
-                characterTwo = input.next();
-                int lowestRank = playerList.size();
-                Player newPlayer = new Player(player, characterOne, characterTwo, lowestRank);
-                newPlayer.setWins(wins);
-                newPlayer.setLosses(losses);
-                playerList.addPlayer(newPlayer);
-                invalidValue = false;
-
             } else {
-                System.out.println("Sorry, we can only store 2 characters maximum at this time.");
-                System.out.println("Please pick between 1 or 2.");
+                System.out.println("Invalid. Please pick between 1 or 2.");
             }
-
         }
 
+        int lowestRank = playerList.size() + 1;
+        Player newPlayer = new Player(player, characters.get(0), characters.get(1), lowestRank);
+        newPlayer.setWins(wins);
+        newPlayer.setLosses(losses);
+        playerList.addPlayer(newPlayer);
+    }
 
+    // EFFECTS: collect characters to add to list of characters.
+    private ArrayList<String> addCharacters(String player, int wins, int losses, int characterCount) {
+        String characterOne;
+        String characterTwo;
+        ArrayList<String> characterList = new ArrayList<>();
+        if (characterCount == 1) {
+            System.out.println("What is their character?");
+            characterOne = input.next();
+            characterTwo = "N/A";
+            characterList.add(characterOne);
+            characterList.add(characterTwo);
 
+        } else if (characterCount == 2) {
+            System.out.println("What is their first character?");
+            characterOne = input.next();
+            System.out.println("What is their second character?");
+            characterTwo = input.next();
+            characterList.add(characterOne);
+            characterList.add(characterTwo);
+        }
+        return characterList;
     }
 }

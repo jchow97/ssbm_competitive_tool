@@ -7,17 +7,19 @@ public class Match {
     private Player playerOne;
     private Player playerTwo;
     private Player winner;
-    private String playerOneCharacter;
-    private String playerTwoCharacter;
+    //private String playerOneCharacter;
+    //private String playerTwoCharacter;
 
     public Match(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
-        ArrayList<String> playerOneChars = playerOne.getMainChars();
-        this.playerOneCharacter = playerOneChars.get(0);
+        //TODO commented out code doesn't work, but want to include characters
+        // into matches in future implementation.
+        //ArrayList<String> playerOneChars = playerOne.getMainChars();
+        //this.playerOneCharacter = playerOneChars.get(0);
 
         this.playerTwo = playerTwo;
-        ArrayList<String> playerTwoChars = playerTwo.getMainChars();
-        this.playerTwoCharacter = playerTwoChars.get(0);
+        //ArrayList<String> playerTwoChars = playerTwo.getMainChars();
+        //this.playerTwoCharacter = playerTwoChars.get(0);
 
         this.winner = null;
     }
@@ -26,21 +28,23 @@ public class Match {
     // (doesn't assume winner is p1 or p2, code will handle it).
     // MODIFIES: this
     // EFFECTS: declares who won the match.
-    public boolean declareWinner(String winner) {
-        if (winner == playerOne.getName()) {
+    public boolean declareWinner(String player) {
+        if (player.equals(playerOne.getName())) {
             this.winner = playerOne;
-        } else if (winner == playerTwo.getName()) {
+            recordMatch();
+            return true;
+        } else if (player.equals(playerTwo.getName())) {
             this.winner = playerTwo;
+            recordMatch();
+            return true;
         } else {
             return false;
         }
-        recordMatch();
-        return true;
     }
 
     // REQUIRES: winner has been declared
     // MODIFIES: Player, Tournament(?)
-    // EFFECTS: processes the completed match; updates the record of players in match
+    // EFFECTS: updates the record of players in match
     public void recordMatch() {
         if (winner == playerOne) {
             playerOne.addWin();
@@ -64,12 +68,12 @@ public class Match {
         return winner;
     }
 
-    public String getPlayerOneCharacter() {
-        return playerOneCharacter;
-    }
-
-    public String getPlayerTwoCharacter() {
-        return playerTwoCharacter;
-    }
+    //public String getPlayerOneCharacter() {
+//        return playerOneCharacter;
+//    }
+//
+//    public String getPlayerTwoCharacter() {
+//        return playerTwoCharacter;
+//    }
 
 }
