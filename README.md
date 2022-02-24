@@ -32,3 +32,7 @@ members to evaluate player performance and use the data to formulate their own p
 - As a user, I want to be able to view the player database, with basic statistics.
 - As a user, I want to be able to search for a player in the database, and retrieve statistics.
 - As a user, I want to be able to see tournament results reflected in the player database (not 100% working as intended yet).
+- As a user, I want to be able to save my player database and related statistics to file.
+- As a user, I want to be able to load my player database and related statistics from file.
+- As a user, I want to be able to save an ongoing tournament to file.
+- As a suer, I want to be able to load and resume an ongoing tournament from file.
