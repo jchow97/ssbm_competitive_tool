@@ -13,25 +13,25 @@ class PlayerTest {
 
     @BeforeEach
     void runBefore() {
-        testPlayer1 = new Player("Barry", "Fox", "N/A", 1);
-        testPlayer2 = new Player("Allen", "Peach", "Marth", 2);
+        testPlayer1 = new Player("Barry");
+        testPlayer2 = new Player("Allen");
     }
 
     @Test
     void testConstructor() {
         assertEquals("Barry", testPlayer1.getName());
-        ArrayList<String> player1MainChars = testPlayer1.getMainChars();
+        ArrayList<GameCharacter> player1MainChars = testPlayer1.getMainChars();
         assertEquals(0, testPlayer1.getWins());
         assertEquals(0, testPlayer1.getLosses());
         assertEquals(0, testPlayer1.getWinRate());
-        assertEquals(1, player1MainChars.size());
+        assertEquals(0, player1MainChars.size());
         assertEquals("Fox", player1MainChars.get(0));
         assertEquals(1, testPlayer1.getRank());
         assertEquals(0, testPlayer1.getTournamentWins());
 
 
         assertEquals("Allen", testPlayer2.getName());
-        ArrayList<String> player2MainChars = testPlayer2.getMainChars();
+        ArrayList<GameCharacter> player2MainChars = testPlayer2.getMainChars();
         assertEquals(0, testPlayer2.getWins());
         assertEquals(0, testPlayer2.getLosses());
         assertEquals(0, testPlayer2.getWinRate());

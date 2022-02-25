@@ -5,8 +5,7 @@ import java.util.ArrayList;
 
 // Represents a Tournament consisting of 8 players.
 public class Tournament {
-
-    private PlayerList competitors = new PlayerList();
+    private ArrayList<Player> competitors = new ArrayList<>();
 
     private Match quarterfinalMatch1;
     private Match quarterfinalMatch2;
@@ -22,6 +21,8 @@ public class Tournament {
 
     // EFFECTS: construct an 8-player tournament, with 4 matches based on rankings.
     public Tournament() {
+        // TODO: get players from json data, add to competitors list.
+
         quarterfinalMatch1 = new Match(competitors.get(0), competitors.get(7));
         quarterfinalMatch2 = new Match(competitors.get(1), competitors.get(6));
         quarterfinalMatch3 = new Match(competitors.get(2), competitors.get(5));
@@ -72,7 +73,7 @@ public class Tournament {
     }
 
     // EFFECTS: returns the PlayerList of competitors.
-    public PlayerList getCompetitors() {
+    public ArrayList<Player> getCompetitors() {
         return competitors;
     }
 

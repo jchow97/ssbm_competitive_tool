@@ -128,9 +128,9 @@ public class TournamentTest {
 
     @Test
     void testGetCompetitors() {
-        PlayerList testPlayers = testTournament.getCompetitors();
+        ArrayList<Player> testPlayers = testTournament.getCompetitors();
         Player player = testPlayers.get(0);
-        assertEquals("Mang0", player.getName());
+        assertEquals("Mang0", player.getName()); // not sure if this will still work
     }
 
 }

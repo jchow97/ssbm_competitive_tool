@@ -1,17 +1,24 @@
 package ui;
 
+import model.GameCharacter;
 import model.Match;
 import model.Player;
-import model.PlayerList;
+//import model.PlayerList;
 import model.Tournament;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 // Competitive Super Smash Bros. Melee Application
 public class MeleeApp {
+    private static final String JSON_STORE = "./data/player.json";
     private Scanner input;
-    private PlayerList playerList;
+    ArrayList<Player> playerList = new ArrayList<>();
+    private Player player;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // Code based after TellerApp's ui TellerApp code.
     // EFFECTS: runs the Melee application
@@ -26,8 +33,10 @@ public class MeleeApp {
     private void runMelee() {
         boolean keepGoing = true;
         String command;
-
-        init();
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         while (keepGoing) {
             displayMenu();
@@ -44,14 +53,6 @@ public class MeleeApp {
         System.out.println("\nGoodbye!");
     }
 
-    // MODIFIES: this
-    // EFFECTS: initializes 8-player list and scanner for inputs.
-    private void init() {
-        playerList = new PlayerList();
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
-    }
-
     // adapted from TellerApp UI.
     // EFFECTS: prints option menu into console
     private void displayMenu() {
@@ -63,6 +64,7 @@ public class MeleeApp {
         System.out.println("\tq -> Quit");
     }
 
+    //TODO
     // Code adapted from TellerApp UI.
     // MODIFIES: this
     // EFFECTS: process user command from display menu.
@@ -73,7 +75,8 @@ public class MeleeApp {
         } else if (command.equals("t")) {
             //display tournament viewer
             //display Match 1 details
-            playerList = runTournament();
+//            playerList = runTournament();
+            //TODO
         } else if (command.equals("s")) {
             //ask for player name
             displaySearch();
@@ -90,9 +93,9 @@ public class MeleeApp {
     private void displayPlayerRankings() {
         System.out.printf("%-4s %-10s %-7s %-7s %-20s %-20s", "Rank", "Player", "Wins", "Losses", "Characters", "");
         System.out.println("\n---------------------------------------------------------------------------------");
-        ArrayList<Player> players = playerList.getPlayerList();
-        for (Player player: players) {
-            ArrayList<String> characters = player.getMainChars();
+        for (Player player: playerList) {
+            ArrayList<GameCharacter> characters = player.getMainChars();
+            //TODO
             if (characters.size() == 2) {
                 System.out.printf("%-4d %-10s %-7d %-7d %-20s %-20s\n", player.getRank(), player.getName(),
                         player.getWins(), player.getLosses(), characters.get(0), characters.get(1));
@@ -109,7 +112,7 @@ public class MeleeApp {
 
     // MODIFIES: this
     // EFFECTS: prints tournament bracket with original 8 players onto console
-    private PlayerList runTournament() {
+    private void runTournament() {
         Tournament tournament = new Tournament();
         System.out.println("THE BIGGEST BADDEST TOURNAMENT EVER");
 
@@ -137,7 +140,8 @@ public class MeleeApp {
         } else {
             System.out.println("Returning to Main Menu.");
         }
-        return tournament.getCompetitors();
+        //TODO
+//        return tournament.getCompetitors();
     }
 
     // EFFECTS: prints the quarterfinal match ups onto console.
@@ -259,10 +263,10 @@ public class MeleeApp {
     // EFFECTS: searches list of players for given name. Name needs to be exact for a match
     // to be found.
     private boolean searchPlayer(String name) {
-        ArrayList<Player> playerListForSearch = playerList.getPlayerList();
-        for (Player player: playerListForSearch) {
+        for (Player player: playerList) {
             if (name.equals(player.getName())) {
-                ArrayList<String> characters = player.getMainChars();
+                //TODO
+                ArrayList<GameCharacter> characters = player.getMainChars();
                 System.out.printf("%s's Stats:", player.getName());
                 if (characters.size() == 2) {
                     System.out.printf("\nRank: %-4d %-10s Wins: %-7d Losses: %-7d Characters: %s, %s\n",
@@ -304,12 +308,12 @@ public class MeleeApp {
                 System.out.println("Invalid. Please pick between 1 or 2.");
             }
         }
-
-        int lowestRank = playerList.size() + 1;
-        Player newPlayer = new Player(player, characters.get(0), characters.get(1), lowestRank);
-        newPlayer.setWins(wins);
-        newPlayer.setLosses(losses);
-        playerList.addPlayer(newPlayer);
+        //TODO
+//        int lowestRank = playerList.size() + 1;
+//        Player newPlayer = new Player(player, characters.get(0), characters.get(1), lowestRank);
+//        newPlayer.setWins(wins);
+//        newPlayer.setLosses(losses);
+//        playerList.addPlayer(newPlayer);
     }
 
 

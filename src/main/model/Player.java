@@ -1,35 +1,43 @@
 package model;
 
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represents a competitive Player.
-public class Player {
+public class Player implements Writable {
 
     private String name;
     private int wins;
     private int losses;
     private double winRate;
-    private ArrayList<String> mainChars;
+    private ArrayList<GameCharacter> mainChars;
     private int rank;
     private int tournamentWins;
 
-    // EFFECTS: constructs a player with a given initial name, and
-    // character(s) they play.
-    public Player(String name, String characterOne, String characterTwo, int rank) {
+    // EFFECTS: constructs a player with a given player name.
+    public Player(String name) {
         this.name = name;
+
+        // to avoid the UI being super long when adding a player, players will
+        // just be constructed with constant wins, losses, win rate, rank, and tournament wins.
         wins = 0;
         losses = 0;
         winRate = 0.00;
         this.mainChars = new ArrayList<>();
-        mainChars.add(characterOne);
 
-        // handles cases where player only plays one character
-        if (!characterTwo.equals("N/A")) {
-            mainChars.add(characterTwo);
-        }
+//        GameCharacter charOne = new GameCharacter(characterOne);
+//        mainChars.add(charOne);
+//        // handles cases where player only plays one character
+//        if (!characterTwo.equals("N/A")) {
+//            GameCharacter charTwo = new GameCharacter(characterTwo);
+//            mainChars.add(charTwo);
+//        }
 
-        this.rank = rank;
+        rank = -1;
         tournamentWins = 0;
     }
 
@@ -40,8 +48,7 @@ public class Player {
     public int addWin() {
         wins = wins + 1;
         updateWinRate();
-        return getWins(); //stub
-
+        return getWins();
     }
 
     // REQUIRES:
@@ -85,6 +92,47 @@ public class Player {
         return winRate;
     }
 
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public void setTournamentWins(int tournamentWins) {
+        this.tournamentWins = tournamentWins;
+    }
+
+    // REQUIRES:
+    // MODIFIES: this
+    // EFFECTS: adds given character to player.
+    public void addMainCharacter(GameCharacter character) {
+        mainChars.add(character);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("wins", wins);
+        json.put("losses", losses);
+        json.put("winrate", winRate);
+        json.put("main characters", mainChars);
+        json.put("main chars", mainCharsToJson());
+        json.put("rank", rank);
+        json.put("tournament wins", tournamentWins);
+        return json;
+    }
+
+
+    //EFFECTS: returns main characters in this player as a JSON array
+    private JSONArray mainCharsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (GameCharacter gc : mainChars) {
+            jsonArray.put(gc.toJson());
+        }
+
+        return jsonArray;
+    }
+
     // EFFECTS: returns player's name.
     public String getName() {
         return name;
@@ -106,7 +154,7 @@ public class Player {
     }
 
     // EFFECTS: returns player's character list.
-    public ArrayList<String> getMainChars() {
+    public ArrayList<GameCharacter> getMainChars() {
         return mainChars;
     }
 

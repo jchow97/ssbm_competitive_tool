@@ -16,12 +16,12 @@ public class MatchTest {
 
     @BeforeEach
     void runBefore() {
-        testPlayer1 = new Player("Barry", "Fox", "N/A", 1);
-        testPlayer2 = new Player("Allen", "Peach", "Marth", 4);
+        testPlayer1 = new Player("Barry");
+        testPlayer2 = new Player("Allen");
         testMatch1 = new Match(testPlayer1, testPlayer2);
 
-        testPlayer3 = new Player("Wally", "Falco", "N/A", 2);
-        testPlayer4 = new Player("West", "Sheik", "N/A", 3);
+        testPlayer3 = new Player("Wally");
+        testPlayer4 = new Player("West");
         testMatch2 = new Match(testPlayer3, testPlayer4);
     }
 
