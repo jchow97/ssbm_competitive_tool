@@ -31,14 +31,6 @@ public class Player implements Writable {
         winRate = 0.00;
         this.mainChars = new ArrayList<>();
 
-//        GameCharacter charOne = new GameCharacter(characterOne);
-//        mainChars.add(charOne);
-//        // handles cases where player only plays one character
-//        if (!characterTwo.equals("N/A")) {
-//            GameCharacter charTwo = new GameCharacter(characterTwo);
-//            mainChars.add(charTwo);
-//        }
-
         // -1 represents unranked.
         rank = -1;
         tournamentWins = 0;

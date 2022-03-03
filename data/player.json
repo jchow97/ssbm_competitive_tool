@@ -1,0 +1,16 @@
+{
+  "name": "mang0",
+  "wins": 3,
+  "losses": 0,
+  "winRate": 1.00,
+  "mainChars": [
+    {
+      "name": "Falco"
+    },
+    {
+      "name": "Fox"
+    }
+  ],
+  "rank": 1,
+  "tournamentWins": 0
+}

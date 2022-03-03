@@ -3,11 +3,13 @@ package ui;
 import model.GameCharacter;
 import model.Match;
 import model.Player;
-//import model.PlayerList;
 import model.Tournament;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,13 +22,17 @@ public class MeleeApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    // Code based after TellerApp's ui TellerApp code.
+    // Code based after TellerApp's ui TellerApp code and WorkRoomApp code.
     // EFFECTS: runs the Melee application
     public MeleeApp() {
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runMelee();
     }
 
-    // Code based after TellerApp's ui TellerApp code.
+    // Code based after TellerApp's ui TellerApp and WorkRoomApp code.
     // MODIFIES: this
     // EFFECTS: initializes the UI and displays the main menu.
     // acts as the starting branch for the application.
@@ -34,9 +40,6 @@ public class MeleeApp {
         boolean keepGoing = true;
         String command;
         input = new Scanner(System.in);
-        input.useDelimiter("\n");
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
 
         while (keepGoing) {
             displayMenu();
@@ -59,8 +62,10 @@ public class MeleeApp {
         System.out.println("\nWelcome to the Super Smash Bros. Melee Tournament Tool! Please select an action:");
         System.out.println("\tv -> View Player Rankings");
         System.out.println("\tt -> Run Tournament");
-        System.out.println("\ts -> Search for a player");
+        System.out.println("\tf -> Find a player");
         System.out.println("\ta -> Add Player");
+        System.out.println("\ts -> Save to file");
+        System.out.println("\tl -> Load from file");
         System.out.println("\tq -> Quit");
     }
 
@@ -77,12 +82,16 @@ public class MeleeApp {
             //display Match 1 details
 //            playerList = runTournament();
             //TODO
-        } else if (command.equals("s")) {
+        } else if (command.equals("f")) {
             //ask for player name
             displaySearch();
         } else if (command.equals("a")) {
             //ask for player details.
             displayAddPlayer();
+        } else if (command.equals("s")) {
+            saveMeleeApp();
+        } else if (command.equals("l")) {
+            loadMeleeApp();
         } else {
             System.out.println("Invalid command. Please try again.");
             processCommand(command);
@@ -338,5 +347,31 @@ public class MeleeApp {
             characterList.add(characterTwo);
         }
         return characterList;
+    }
+
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: saves playerList data onto JSON file.
+    public void saveMeleeApp() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(player);
+            jsonWriter.close();
+            System.out.println("Saved " + player.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable tow rite to file: " + JSON_STORE);
+        }
+    }
+
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: loads playerList data from JSON file.
+    public void loadMeleeApp() {
+        try {
+            player = jsonReader.read();
+            System.out.println("Loaded " + player.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }

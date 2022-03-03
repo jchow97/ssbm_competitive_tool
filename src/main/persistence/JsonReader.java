@@ -44,12 +44,12 @@ public class JsonReader {
         String name = jsonObject.getString("name");
         int wins = jsonObject.getInt("wins");
         int losses = jsonObject.getInt("losses");
-        double winRate = jsonObject.getDouble("winrate");
+        double winRate = jsonObject.getDouble("winRate");
 
         int rank = jsonObject.getInt("rank");
-        int tournamentWins = jsonObject.getInt("tournament wins");
+        int tournamentWins = jsonObject.getInt("tournamentWins");
 
-
+        //TODO add player constructor here to add all parameters directly
         Player player = new Player(name); // we will need to "create" more things, add more parameters.
         String mainChars = jsonObject.getString("main characters");
         addMainChars(player, jsonObject);
