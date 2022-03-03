@@ -67,6 +67,6 @@
 //        expectedList.add(testPlayer6);
 //        expectedList.add(testPlayer7);
 //        expectedList.add(testPlayer8);
-//        assertEquals(expectedList, testPlayerList); //TODO check if this is a valid test line
+//        assertEquals(expectedList, testPlayerList);
 //    }
 //}

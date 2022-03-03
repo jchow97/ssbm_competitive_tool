@@ -18,6 +18,8 @@ public class Player implements Writable {
     private int rank;
     private int tournamentWins;
 
+    // TODO: add a 2nd constructor with old format?
+
     // EFFECTS: constructs a player with a given player name.
     public Player(String name) {
         this.name = name;
@@ -37,6 +39,7 @@ public class Player implements Writable {
 //            mainChars.add(charTwo);
 //        }
 
+        // -1 represents unranked.
         rank = -1;
         tournamentWins = 0;
     }
@@ -92,10 +95,16 @@ public class Player implements Writable {
         return winRate;
     }
 
+    // REQUIRES:
+    // MODIFIES: this
+    // EFFECTS: sets rank field to the given integer.
     public void setRank(int rank) {
         this.rank = rank;
     }
 
+    // REQUIRES:
+    // MODIFIES: this
+    // EFFECTS: sets tournamentWins field to the given integer.
     public void setTournamentWins(int tournamentWins) {
         this.tournamentWins = tournamentWins;
     }
@@ -107,6 +116,11 @@ public class Player implements Writable {
         mainChars.add(character);
     }
 
+
+
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: converts Player data to JSON format.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
