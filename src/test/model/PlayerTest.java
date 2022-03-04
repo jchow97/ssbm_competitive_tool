@@ -28,7 +28,7 @@ class PlayerTest {
         }
 
 
-        testPlayer2 = new Player("Player", 1, 2, 1 / 3,
+        testPlayer2 = new Player("Player", 1, 2, 0.33,
                 testCharacters, 15, 3);
         testPlayer3 = new Player("Player", 1, 2, testCharacters, 15, 3);
     }

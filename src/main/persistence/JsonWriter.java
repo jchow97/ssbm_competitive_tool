@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 // Class is modeled after JsonSerializationDemo program provided in Phase 2 instructions.
-// Represents a writer that writes JSON representation of Player to file.
+// Represents a writer that writes JSON representation of a list of Players to file.
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -30,7 +30,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of Player to file.
+    // EFFECTS: writes JSON representation of list of Players to file.
     public void write(ArrayList<Player> playerList) {
         JSONObject json = new JSONObject();
         JSONArray jsonArray = new JSONArray(playerList);

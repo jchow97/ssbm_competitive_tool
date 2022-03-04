@@ -62,11 +62,8 @@ public class JsonReader {
         ArrayList<GameCharacter> mainChars = new ArrayList<>();
         int rank = jsonObject.getInt("rank");
         int tournamentWins = jsonObject.getInt("tournamentWins");
-
         parseMainChars(mainChars, jsonObject);
-
         Player player = new Player(name, wins, losses, winRate, mainChars, rank, tournamentWins);
-
         return player;
     }
 

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.sql.Array;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,7 +24,6 @@ public class JsonWriterTest {
     @Test
     void testWriterInvalidFile() {
         try {
-            ArrayList<Player> testPlayerList = new ArrayList<>();
             JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
@@ -77,5 +75,4 @@ public class JsonWriterTest {
             fail("GameCharacterException shouldn't have been thrown.");
         }
     }
-
 }

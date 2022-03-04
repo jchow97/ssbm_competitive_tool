@@ -3,7 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,14 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class TournamentTest {
     Tournament testTournament;
-    private Player testPlayer1;
-    private Player testPlayer2;
-    private Player testPlayer3;
-    private Player testPlayer4;
-    private Player testPlayer5;
-    private Player testPlayer6;
-    private Player testPlayer7;
-    private Player testPlayer8;
 
     ArrayList<Player> competitors;
 

@@ -1,9 +1,6 @@
 package model;
 
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 // Represents a competitive Player.
@@ -17,14 +14,11 @@ public class Player {
     private int rank;
     private int tournamentWins;
 
-    // TODO: add a 2nd constructor with old format?
-
+    // Constructor used to create generic player used in tests for ease of testing, especially
+    // in other test classes.
     // EFFECTS: constructs a player with a given player name.
     public Player(String name) {
         this.name = name;
-
-        // to avoid the UI being super long when adding a player, players will
-        // just be constructed with constant wins, losses, win rate, rank, and tournament wins.
         wins = 0;
         losses = 0;
         winRate = 0.00;
@@ -35,8 +29,9 @@ public class Player {
         tournamentWins = 0;
     }
 
+    // Constructor reconstructing players when sed for reading JSON.
     // EFFECTS: constructs a player with a given player name, wins, losses, winRate,
-    //          mainChars, rank, and tournament wins. Used for reading JSON.
+    //          mainChars, rank, and tournament wins.
     public Player(String name, int wins, int losses, double winRate,
                   ArrayList<GameCharacter> mainChars, int rank, int tournamentWins) {
         this.name = name;
@@ -48,6 +43,9 @@ public class Player {
         this.tournamentWins = tournamentWins;
     }
 
+    // Constructor used when adding new player object in UI.
+    // EFFECTS: constructs a player with a given player name, wins, losses,
+    //          mainChars, rank, and tournament wins.
     public Player(String name, int wins, int losses,
                   ArrayList<GameCharacter> mainChars, int rank, int tournamentWins) {
         this.name = name;
@@ -80,7 +78,7 @@ public class Player {
 
     // REQUIRES:
     // MODIFIES: this
-    // EFFECTS: changes wins to given integer and update winRate
+    // EFFECTS: changes wins to given integer and updates winRate
     public void setWins(int wins) {
         this.wins = wins;
         updateWinRate();
@@ -88,7 +86,7 @@ public class Player {
 
     // REQUIRES:
     // MODIFIES: this
-    // EFFECTS: changes losses to given integer.
+    // EFFECTS: changes losses to given integer and updates winRate.
     public void setLosses(int losses) {
         this.losses = losses;
         updateWinRate();
@@ -129,38 +127,6 @@ public class Player {
     public void addMainCharacter(GameCharacter character) {
         mainChars.add(character);
     }
-
-
-
-//    // REQUIRES:
-//    // MODIFIES:
-//    // EFFECTS: converts Player data to JSON format.
-//    @Override
-//    public JSONArray toJson() {
-//        JSONArray jsonArray = new JSONArray();
-//        JSONObject json = new JSONObject();
-//        json.put("name", name);
-//        json.put("wins", wins);
-//        json.put("losses", losses);
-//        json.put("winRate", winRate);
-//        json.put("mainChars", mainCharsToJson());
-//        json.put("rank", rank);
-//        json.put("tournamentWins", tournamentWins);
-//        jsonArray.put(json);
-//        return jsonArray;
-//    }
-
-
-//    //EFFECTS: returns main characters in this player as a JSON array
-//    private JSONArray mainCharsToJson() {
-//        JSONArray jsonArray = new JSONArray();
-//
-//        for (GameCharacter gc : mainChars) {
-//            gc.toJson();
-//        }
-//
-//        return jsonArray;
-//    }
 
     // EFFECTS: returns player's name.
     public String getName() {

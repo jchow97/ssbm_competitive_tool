@@ -82,14 +82,5 @@
             {"name": "Fox"},
             {"name": "Sheik"}
         ]
-    },
-    {
-        "wins": 200,
-        "name": "killerfallen",
-        "rank": 9,
-        "tournamentWins": 0,
-        "winRate": 0.9523809523809523,
-        "losses": 10,
-        "mainChars": [{"name": "Peach"}]
     }
 ]}

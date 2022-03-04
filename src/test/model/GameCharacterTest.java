@@ -33,7 +33,7 @@ public class GameCharacterTest {
             testGameCharacter2 = new GameCharacter("Barry");
             fail("GameCharacterException should have been thrown.");
         } catch (GameCharacterException e) {
-            // do nothing.
+            // pass
         }
     }
 }

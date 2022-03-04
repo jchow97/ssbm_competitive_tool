@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 // Represents a Tournament consisting of 8 players.
 public class Tournament {
-    private ArrayList<Player> competitors = new ArrayList<>();
+    private ArrayList<Player> competitors;
 
     private Match quarterfinalMatch1;
     private Match quarterfinalMatch2;

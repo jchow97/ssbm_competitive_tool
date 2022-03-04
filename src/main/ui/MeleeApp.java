@@ -19,7 +19,6 @@ public class MeleeApp {
     private static final String JSON_STORE = "./data/player.json";
     private Scanner input;
     ArrayList<Player> playerList = new ArrayList<>();
-    private Player player;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
@@ -126,16 +125,16 @@ public class MeleeApp {
         System.out.println("THE BIGGEST BADDEST TOURNAMENT EVER");
 
         displayQuarterfinals(tournament);
-        tournament = runQuarterfinals(tournament);
+        runQuarterfinals(tournament);
 
         tournament.setSemifinalRound();
         displaySemifinals(tournament);
-        tournament = runSemifinals(tournament);
+        runSemifinals(tournament);
 
         tournament.setGrandFinalRound();
         Match finals = tournament.getGrandFinalMatch();
         displayFinalRound(finals);
-        tournament = runFinals(tournament);
+        runFinals(tournament);
 
         Player tournamentWinner = tournament.getWinner();
         System.out.printf("%s won the tournament!\n", tournamentWinner.getName());
@@ -172,7 +171,7 @@ public class MeleeApp {
     // Cannot declare a player from another match as the winner.
     // MODIFIES: this, Tournament, Match, Player
     // EFFECTS: processes the quarterfinal match ups based on player input.
-    private Tournament runQuarterfinals(Tournament tournament) {
+    private void runQuarterfinals(Tournament tournament) {
         ArrayList<Match> matches = tournament.getQuarterfinalMatches();
         for (int i = 0; i < 4; i++) {
             Match match = matches.get(i);
@@ -185,7 +184,7 @@ public class MeleeApp {
                 match.declareWinner(winner);
             }
         }
-        return tournament;
+//        return tournament;
     }
 
     // EFFECTS: prints the semifinal match ups onto console.
@@ -208,7 +207,7 @@ public class MeleeApp {
     // Cannot declare a player from another match as the winner.
     // MODIFIES: this, Tournament, Match, Player
     // EFFECTS: processes the semifinal match ups based on player input.
-    private Tournament runSemifinals(Tournament tournament) {
+    private void runSemifinals(Tournament tournament) {
         ArrayList<Match> matches = tournament.getSemifinalMatches();
         for (int i = 0; i < 2; i++) {
             Match match = matches.get(i);
@@ -217,7 +216,7 @@ public class MeleeApp {
             String winner = input.next();
             match.declareWinner(winner); //should incorporate a return value to check for invalid names
         }
-        return tournament;
+//        return tournament;
     }
 
     // EFFECTS: prints the final match ups onto console.
@@ -233,13 +232,13 @@ public class MeleeApp {
     // REQUIRES: Intended inputs only. Only declare one of the players as winners.
     // MODIFIES: this, Tournament, Match, Player
     // EFFECTS: processes the final match ups based on player input.
-    private Tournament runFinals(Tournament tournament) {
+    private void runFinals(Tournament tournament) {
         Match match = tournament.getGrandFinalMatch();
         System.out.println("Who won the final match?\n");
         String winner = input.next();
         match.declareWinner(winner);
         tournament.declareWinner();
-        return tournament;
+//        return tournament;
     }
 
     // EFFECTS: prints search prompt onto console, prints player stats if found
@@ -273,7 +272,6 @@ public class MeleeApp {
     private boolean searchPlayer(String name) {
         for (Player player: playerList) {
             if (name.equals(player.getName())) {
-                //TODO
                 ArrayList<GameCharacter> characters = player.getMainChars();
                 System.out.printf("%s's Stats:", player.getName());
                 if (characters.size() == 2) {
@@ -328,27 +326,17 @@ public class MeleeApp {
         GameCharacter characterTwo;
         ArrayList<GameCharacter> characterList = new ArrayList<>();
 
-        // might be able to make this more efficient
-        if (characterCount == 1) {
-            System.out.println("What is their character?");
-            try {
-                characterOne = new GameCharacter(input.next());
-                characterList.add(characterOne);
-            } catch (GameCharacterException e) {
-                System.out.println("Invalid character, please try again.");
-                addCharacters(characterCount);
-            }
+        System.out.println("What is their main character?");
+        try {
+            characterOne = new GameCharacter(input.next());
+            characterList.add(characterOne);
+        } catch (GameCharacterException e) {
+            System.out.println("Invalid character, please try again.");
+            addCharacters(characterCount);
+        }
 
-        } else if (characterCount == 2) {
-            System.out.println("What is their first character?");
-            try {
-                characterOne = new GameCharacter(input.next());
-                characterList.add(characterOne);
-            } catch (GameCharacterException e) {
-                System.out.println("Invalid character, please try again.");
-                addCharacters(characterCount);
-            }
-            System.out.println("What is their second character?");
+        if (characterCount == 2) {
+            System.out.println("What is their alternate character?");
             try {
                 characterTwo = new GameCharacter(input.next());
                 characterList.add(characterTwo);

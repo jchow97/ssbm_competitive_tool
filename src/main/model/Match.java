@@ -31,7 +31,6 @@ public class Match {
         }
     }
 
-    // TODO: should change the implementation so that the modified 'Player' is an input parameter.
     // REQUIRES: winner has been previously declared
     // MODIFIES: Player
     // EFFECTS: updates the wins and losses of players in the match
