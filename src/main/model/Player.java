@@ -51,9 +51,8 @@ public class Player {
     public Player(String name, int wins, int losses,
                   ArrayList<GameCharacter> mainChars, int rank, int tournamentWins) {
         this.name = name;
-        this.wins = wins;
-        this.losses = losses;
-        this.winRate = updateWinRate();
+        setWins(wins);
+        setLosses(losses);
         this.mainChars = mainChars;
         this.rank = rank;
         this.tournamentWins = tournamentWins;

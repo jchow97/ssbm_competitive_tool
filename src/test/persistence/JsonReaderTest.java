@@ -2,6 +2,7 @@ package persistence;
 
 import model.GameCharacter;
 import model.Player;
+import model.exception.GameCharacterException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -20,6 +21,8 @@ public class JsonReaderTest {
             fail("IOException expected");
         } catch (IOException e) {
             // pass
+        } catch (GameCharacterException e) {
+            fail("GameCharacterException shouldn't have been thrown.");
         }
     }
 
@@ -31,12 +34,14 @@ public class JsonReaderTest {
             assertEquals(0, testPlayerList.size());
         } catch (IOException e) {
             fail("Couldn't read from file");
+        } catch (GameCharacterException e) {
+            fail("GameCharacterException shouldn't have been thrown.");
         }
     }
 
     @Test
     void testReaderGeneralPlayerList() {
-        JsonReader reader = new JsonReader("./data/testReaderGeneralWorkRoom.json");
+        JsonReader reader = new JsonReader("./data/testReaderGeneralPlayerList.json");
         try {
             ArrayList<Player> testPlayerList = reader.read();
             //check size and first player details
@@ -49,11 +54,27 @@ public class JsonReaderTest {
             assertEquals(1, testPlayerList.get(0).getRank());
 
             ArrayList<GameCharacter> testGameCharacterList = testPlayerList.get(0).getMainChars();
-            assertEquals("Falco", testGameCharacterList.get(0));
-            assertEquals("Fox", testGameCharacterList.get(1));
+            assertEquals("Falco", testGameCharacterList.get(0).getName());
+            assertEquals("Fox", testGameCharacterList.get(1).getName());
 
         } catch (IOException e) {
             fail("Couldn't read from file");
+        } catch (GameCharacterException e) {
+            fail("GameCharacterException shouldn't have been thrown.");
         }
     }
+
+    @Test
+    void testReaderPlayerListInvalidChar() {
+        JsonReader reader = new JsonReader("./data/testReaderPlayerListInvalidChar.json");
+        try {
+            ArrayList<Player> testPlayerList = reader.read();
+            fail("Supposed to throw GameCharacterException");
+        } catch (IOException e) {
+            fail("Couldn't read from file");
+        } catch (GameCharacterException e) {
+            // pass
+        }
+    }
+
 }

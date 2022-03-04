@@ -24,7 +24,7 @@ public class JsonReader {
 
     // EFFECTS: reads player data from file and returns it;
     // throws IOException if an error occurs reading data from file.
-    public ArrayList<Player> read() throws IOException {
+    public ArrayList<Player> read() throws IOException, GameCharacterException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parsePlayerList(jsonObject);
@@ -42,7 +42,7 @@ public class JsonReader {
     }
 
     // EFFECTS: parses playerList from JSON object and returns it
-    private ArrayList<Player> parsePlayerList(JSONObject jsonObject) {
+    private ArrayList<Player> parsePlayerList(JSONObject jsonObject) throws GameCharacterException {
         ArrayList<Player> playerList = new ArrayList<>();
         JSONArray jsonArray = jsonObject.getJSONArray("playerList");
         for (Object json: jsonArray) {
@@ -54,7 +54,7 @@ public class JsonReader {
     }
 
     // EFFECTS: parses player from JSON object and returns it
-    private Player parsePlayer(JSONObject jsonObject) {
+    private Player parsePlayer(JSONObject jsonObject) throws GameCharacterException {
         String name = jsonObject.getString("name");
         int wins = jsonObject.getInt("wins");
         int losses = jsonObject.getInt("losses");
@@ -72,18 +72,14 @@ public class JsonReader {
 
     // MODIFIES: Player
     // EFFECTS: parses main chars from JSON object and adds them to Player
-    private void parseMainChars(ArrayList<GameCharacter> mainChars, JSONObject jsonObject) {
+    private void parseMainChars(ArrayList<GameCharacter> mainChars, JSONObject jsonObject)
+            throws GameCharacterException {
         JSONArray jsonArray = jsonObject.getJSONArray("mainChars");
         for (Object json : jsonArray) {
             JSONObject nextCharacter = (JSONObject) json;
             GameCharacter gameCharacter;
-            try {
-                gameCharacter = new GameCharacter(nextCharacter.getString("name"));
-                mainChars.add(gameCharacter);
-            } catch (GameCharacterException e) {
-                //TODO not complete implementation for exception handling
-                break;
-            }
+            gameCharacter = new GameCharacter(nextCharacter.getString("name"));
+            mainChars.add(gameCharacter);
         }
     }
 }

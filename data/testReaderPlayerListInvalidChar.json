@@ -1,0 +1,13 @@
+{"playerList": [
+  {
+    "wins": 0,
+    "name": "mang0",
+    "rank": 1,
+    "tournamentWins": 0,
+    "winRate": 0,
+    "losses": 0,
+    "mainChars": [
+      {"name": "Invalid Character"}
+    ]
+  }
+]}

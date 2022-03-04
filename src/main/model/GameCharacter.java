@@ -18,7 +18,7 @@ public class GameCharacter {
         if (characterList.contains(name)) {
             this.name = name;
         } else {
-            throw new GameCharacterException();
+            throw new GameCharacterException("This is not a valid character");
         }
     }
 

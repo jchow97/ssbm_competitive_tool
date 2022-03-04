@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Player;
+import model.exception.GameCharacterException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +35,7 @@ public class JsonWriterTest {
     }
 
     @Test
-    void testWriterEmptyWorkroom() {
+    void testWriterEmptyPlayerList() {
         try {
             ArrayList<Player> testWritePlayerList = new ArrayList<>();
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyPlayerList.json");
@@ -48,6 +49,8 @@ public class JsonWriterTest {
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");
+        } catch (GameCharacterException e) {
+            fail("GameCharacterException shouldn't have been thrown.");
         }
     }
 
@@ -65,9 +68,13 @@ public class JsonWriterTest {
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralPlayerList.json");
             ArrayList<Player> testReadPlayerList = reader.read();
-            assertEquals(0, testReadPlayerList.size());
+            assertEquals(2, testReadPlayerList.size());
+            assertEquals("Barry", testReadPlayerList.get(0).getName());
+            assertEquals("Allen", testReadPlayerList.get(1).getName());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
+        } catch (GameCharacterException e) {
+            fail("GameCharacterException shouldn't have been thrown.");
         }
     }
 

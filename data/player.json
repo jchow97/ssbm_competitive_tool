@@ -1,86 +1,95 @@
 {"playerList": [
     {
-        "wins": 0,
+        "wins": 4,
         "name": "mang0",
         "rank": 1,
         "tournamentWins": 0,
-        "winRate": 0,
-        "losses": 0,
+        "winRate": 0.8,
+        "losses": 1,
         "mainChars": [
             {"name": "Falco"},
             {"name": "Fox"}
         ]
     },
     {
-        "wins": 0,
+        "wins": 2,
         "name": "Zain",
         "rank": 2,
         "tournamentWins": 0,
-        "winRate": 0,
-        "losses": 0,
+        "winRate": 0.5,
+        "losses": 2,
         "mainChars": [
             {"name": "Marth"},
             {"name": "Roy"}
         ]
     },
     {
-        "wins": 0,
+        "wins": 2,
         "name": "Plup",
         "rank": 3,
         "tournamentWins": 0,
-        "winRate": 0,
-        "losses": 0,
+        "winRate": 0.5,
+        "losses": 2,
         "mainChars": [
             {"name": "Sheik"},
             {"name": "Fox"}
         ]
     },
     {
-        "wins": 0,
+        "wins": 1,
         "name": "iBDW",
         "rank": 4,
         "tournamentWins": 0,
-        "winRate": 0,
-        "losses": 0,
+        "winRate": 0.3333333333333333,
+        "losses": 2,
         "mainChars": [{"name": "Fox"}]
     },
     {
-        "wins": 0,
+        "wins": 1,
         "name": "Wizzrobe",
         "rank": 5,
         "tournamentWins": 0,
-        "winRate": 0,
-        "losses": 0,
+        "winRate": 0.3333333333333333,
+        "losses": 2,
         "mainChars": [{"name": "Captain Falcon"}]
     },
     {
-        "wins": 0,
+        "wins": 1,
         "name": "SFAT",
         "rank": 6,
         "tournamentWins": 0,
-        "winRate": 0,
-        "losses": 0,
+        "winRate": 0.3333333333333333,
+        "losses": 2,
         "mainChars": [{"name": "Fox"}]
     },
     {
-        "wins": 0,
+        "wins": 1,
         "name": "Hungrybox",
         "rank": 7,
         "tournamentWins": 0,
-        "winRate": 0,
-        "losses": 0,
+        "winRate": 0.3333333333333333,
+        "losses": 2,
         "mainChars": [{"name": "Jigglypuff"}]
     },
     {
-        "wins": 0,
+        "wins": 3,
         "name": "Leffen",
         "rank": 8,
         "tournamentWins": 0,
-        "winRate": 0,
-        "losses": 0,
+        "winRate": 0.6,
+        "losses": 2,
         "mainChars": [
             {"name": "Fox"},
             {"name": "Sheik"}
         ]
+    },
+    {
+        "wins": 200,
+        "name": "killerfallen",
+        "rank": 9,
+        "tournamentWins": 0,
+        "winRate": 0.9523809523809523,
+        "losses": 10,
+        "mainChars": [{"name": "Peach"}]
     }
 ]}

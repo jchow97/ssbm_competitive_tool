@@ -380,7 +380,11 @@ public class MeleeApp {
     // EFFECTS: loads playerList data from JSON file.
     public void loadMeleeApp() {
         try {
-            playerList = jsonReader.read();
+            try {
+                playerList = jsonReader.read();
+            } catch (GameCharacterException e) {
+                System.out.println("Unable to load player database: Contains invalid Game Character.");
+            }
             System.out.println("Loaded player database from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
