@@ -1,5 +1,6 @@
 package ui;
 
+import model.exception.*;
 import model.GameCharacter;
 import model.Match;
 import model.Player;
@@ -7,9 +8,9 @@ import model.Tournament;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -80,8 +81,8 @@ public class MeleeApp {
         } else if (command.equals("t")) {
             //display tournament viewer
             //display Match 1 details
-//            playerList = runTournament();
-            //TODO
+            runTournament();
+
         } else if (command.equals("f")) {
             //ask for player name
             displaySearch();
@@ -104,13 +105,12 @@ public class MeleeApp {
         System.out.println("\n---------------------------------------------------------------------------------");
         for (Player player: playerList) {
             ArrayList<GameCharacter> characters = player.getMainChars();
-            //TODO
             if (characters.size() == 2) {
                 System.out.printf("%-4d %-10s %-7d %-7d %-20s %-20s\n", player.getRank(), player.getName(),
-                        player.getWins(), player.getLosses(), characters.get(0), characters.get(1));
+                        player.getWins(), player.getLosses(), characters.get(0).getName(), characters.get(1).getName());
             } else {
                 System.out.printf("%-4d %-10s %-7d %-7d %-20s %-20s\n", player.getRank(), player.getName(),
-                        player.getWins(), player.getLosses(), characters.get(0), "--");
+                        player.getWins(), player.getLosses(), characters.get(0).getName(), "--");
             }
         }
 
@@ -122,7 +122,7 @@ public class MeleeApp {
     // MODIFIES: this
     // EFFECTS: prints tournament bracket with original 8 players onto console
     private void runTournament() {
-        Tournament tournament = new Tournament();
+        Tournament tournament = new Tournament(playerList);
         System.out.println("THE BIGGEST BADDEST TOURNAMENT EVER");
 
         displayQuarterfinals(tournament);
@@ -149,8 +149,7 @@ public class MeleeApp {
         } else {
             System.out.println("Returning to Main Menu.");
         }
-        //TODO
-//        return tournament.getCompetitors();
+        playerList = tournament.getCompetitors();
     }
 
     // EFFECTS: prints the quarterfinal match ups onto console.
@@ -280,11 +279,11 @@ public class MeleeApp {
                 if (characters.size() == 2) {
                     System.out.printf("\nRank: %-4d %-10s Wins: %-7d Losses: %-7d Characters: %s, %s\n",
                             player.getRank(), player.getName(), player.getWins(),
-                            player.getLosses(), characters.get(0), characters.get(1));
+                            player.getLosses(), characters.get(0).getName(), characters.get(1).getName());
                 } else {
                     System.out.printf("\nRank: %-4d %-10s Wins: %-7d Losses: %-7d Characters: %s %s\n",
                             player.getRank(), player.getName(), player.getWins(),
-                            player.getLosses(), characters.get(0), "--");
+                            player.getLosses(), characters.get(0).getName(), "--");
                 }
                 return false;
             }
@@ -296,7 +295,7 @@ public class MeleeApp {
     // EFFECTS: prompts user through adding data for a new player.
     private void displayAddPlayer() {
         System.out.println("What is the name of the player you would like to add?");
-        String player = input.next();
+        String name = input.next();
 
         System.out.println("How many wins do they have? Please only provide numbers.");
         int wins = input.nextInt();
@@ -304,7 +303,7 @@ public class MeleeApp {
         System.out.println("How many losses do they have? Please only provide numbers.");
         int losses = input.nextInt();
 
-        ArrayList<String> characters = new ArrayList<>();
+        ArrayList<GameCharacter> characters = new ArrayList<>();
 
         boolean invalidValue = true;
         while (invalidValue) {
@@ -317,59 +316,72 @@ public class MeleeApp {
                 System.out.println("Invalid. Please pick between 1 or 2.");
             }
         }
-        //TODO
-//        int lowestRank = playerList.size() + 1;
-//        Player newPlayer = new Player(player, characters.get(0), characters.get(1), lowestRank);
-//        newPlayer.setWins(wins);
-//        newPlayer.setLosses(losses);
-//        playerList.addPlayer(newPlayer);
+        int lowestRank = playerList.size() + 1;
+        Player newPlayer = new Player(name, wins, losses, characters, lowestRank, 0);
+        playerList.add(newPlayer);
     }
 
 
     // EFFECTS: helper function for handling adding 1 or 2 character(s) to list of characters.
-    private ArrayList<String> addCharacters(int characterCount) {
-        String characterOne;
-        String characterTwo;
-        ArrayList<String> characterList = new ArrayList<>();
+    private ArrayList<GameCharacter> addCharacters(int characterCount) {
+        GameCharacter characterOne;
+        GameCharacter characterTwo;
+        ArrayList<GameCharacter> characterList = new ArrayList<>();
+
+        // might be able to make this more efficient
         if (characterCount == 1) {
             System.out.println("What is their character?");
-            characterOne = input.next();
-            characterTwo = "N/A";
-            characterList.add(characterOne);
-            characterList.add(characterTwo);
+            try {
+                characterOne = new GameCharacter(input.next());
+                characterList.add(characterOne);
+            } catch (GameCharacterException e) {
+                System.out.println("Invalid character, please try again.");
+                addCharacters(characterCount);
+            }
 
         } else if (characterCount == 2) {
             System.out.println("What is their first character?");
-            characterOne = input.next();
+            try {
+                characterOne = new GameCharacter(input.next());
+                characterList.add(characterOne);
+            } catch (GameCharacterException e) {
+                System.out.println("Invalid character, please try again.");
+                addCharacters(characterCount);
+            }
             System.out.println("What is their second character?");
-            characterTwo = input.next();
-            characterList.add(characterOne);
-            characterList.add(characterTwo);
+            try {
+                characterTwo = new GameCharacter(input.next());
+                characterList.add(characterTwo);
+            } catch (GameCharacterException e) {
+                System.out.println("Invalid character, please try again.");
+                addCharacters(characterCount);
+            }
         }
         return characterList;
     }
 
+    // Code based on JsonSerializationDemo
     // REQUIRES:
     // MODIFIES:
     // EFFECTS: saves playerList data onto JSON file.
     public void saveMeleeApp() {
         try {
             jsonWriter.open();
-            jsonWriter.write(player);
+            jsonWriter.write(playerList);
             jsonWriter.close();
-            System.out.println("Saved " + player.getName() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable tow rite to file: " + JSON_STORE);
+            System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 
+    // Code based on JsonSerializationDemo
     // REQUIRES:
     // MODIFIES:
     // EFFECTS: loads playerList data from JSON file.
     public void loadMeleeApp() {
         try {
-            player = jsonReader.read();
-            System.out.println("Loaded " + player.getName() + " from " + JSON_STORE);
+            playerList = jsonReader.read();
+            System.out.println("Loaded player database from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }

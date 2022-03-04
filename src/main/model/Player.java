@@ -3,12 +3,11 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.Writable;
 
 import java.util.ArrayList;
 
 // Represents a competitive Player.
-public class Player implements Writable {
+public class Player {
 
     private String name;
     private int wins;
@@ -34,6 +33,30 @@ public class Player implements Writable {
         // -1 represents unranked.
         rank = -1;
         tournamentWins = 0;
+    }
+
+    // EFFECTS: constructs a player with a given player name, wins, losses, winRate,
+    //          mainChars, rank, and tournament wins. Used for reading JSON.
+    public Player(String name, int wins, int losses, double winRate,
+                  ArrayList<GameCharacter> mainChars, int rank, int tournamentWins) {
+        this.name = name;
+        this.wins = wins;
+        this.losses = losses;
+        this.winRate = winRate;
+        this.mainChars = mainChars;
+        this.rank = rank;
+        this.tournamentWins = tournamentWins;
+    }
+
+    public Player(String name, int wins, int losses,
+                  ArrayList<GameCharacter> mainChars, int rank, int tournamentWins) {
+        this.name = name;
+        this.wins = wins;
+        this.losses = losses;
+        this.winRate = updateWinRate();
+        this.mainChars = mainChars;
+        this.rank = rank;
+        this.tournamentWins = tournamentWins;
     }
 
     // REQUIRES:
@@ -110,34 +133,35 @@ public class Player implements Writable {
 
 
 
-    // REQUIRES:
-    // MODIFIES:
-    // EFFECTS: converts Player data to JSON format.
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("name", name);
-        json.put("wins", wins);
-        json.put("losses", losses);
-        json.put("winrate", winRate);
-        json.put("main characters", mainChars);
-        json.put("main chars", mainCharsToJson());
-        json.put("rank", rank);
-        json.put("tournament wins", tournamentWins);
-        return json;
-    }
+//    // REQUIRES:
+//    // MODIFIES:
+//    // EFFECTS: converts Player data to JSON format.
+//    @Override
+//    public JSONArray toJson() {
+//        JSONArray jsonArray = new JSONArray();
+//        JSONObject json = new JSONObject();
+//        json.put("name", name);
+//        json.put("wins", wins);
+//        json.put("losses", losses);
+//        json.put("winRate", winRate);
+//        json.put("mainChars", mainCharsToJson());
+//        json.put("rank", rank);
+//        json.put("tournamentWins", tournamentWins);
+//        jsonArray.put(json);
+//        return jsonArray;
+//    }
 
 
-    //EFFECTS: returns main characters in this player as a JSON array
-    private JSONArray mainCharsToJson() {
-        JSONArray jsonArray = new JSONArray();
-
-        for (GameCharacter gc : mainChars) {
-            jsonArray.put(gc.toJson());
-        }
-
-        return jsonArray;
-    }
+//    //EFFECTS: returns main characters in this player as a JSON array
+//    private JSONArray mainCharsToJson() {
+//        JSONArray jsonArray = new JSONArray();
+//
+//        for (GameCharacter gc : mainChars) {
+//            gc.toJson();
+//        }
+//
+//        return jsonArray;
+//    }
 
     // EFFECTS: returns player's name.
     public String getName() {

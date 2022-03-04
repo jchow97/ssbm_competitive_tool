@@ -1,6 +1,6 @@
 package model;
 
-import org.json.JSONObject;
+import model.exception.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,20 +12,16 @@ public class GameCharacter {
             "Pichu", "Pikachu", "Jigglypuff", "Mewtwo", "Mr. Game & Watch", "Marth", "Roy", "Sheik"));
     private String name;
 
+    // TODO implement exception checking.
     // EFFECTS: constructs a character with a name, checks name against character list.
-    public GameCharacter(String name) {
+    public GameCharacter(String name) throws GameCharacterException {
         if (characterList.contains(name)) {
             this.name = name;
         } else {
-            //break
+            throw new GameCharacterException();
         }
     }
 
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("name", name);
-        return json;
-    }
 
     public String getName() {
         return name;

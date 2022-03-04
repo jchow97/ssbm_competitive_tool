@@ -2,11 +2,13 @@ package persistence;
 
 
 import model.Player;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 // Class is modeled after JsonSerializationDemo program provided in Phase 2 instructions.
 // Represents a writer that writes JSON representation of Player to file.
@@ -29,8 +31,10 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of Player to file.
-    public void write(Player player) {
-        JSONObject json = player.toJson();
+    public void write(ArrayList<Player> playerList) {
+        JSONObject json = new JSONObject();
+        JSONArray jsonArray = new JSONArray(playerList);
+        json.put("playerList", jsonArray);
         saveToFile(json.toString(TAB));
     }
 

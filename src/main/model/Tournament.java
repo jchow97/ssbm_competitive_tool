@@ -20,8 +20,8 @@ public class Tournament {
 
 
     // EFFECTS: construct an 8-player tournament, with 4 matches based on rankings.
-    public Tournament() {
-        // TODO: get players from json data, add to competitors list.
+    public Tournament(ArrayList<Player> competitors) {
+        this.competitors = competitors;
 
         quarterfinalMatch1 = new Match(competitors.get(0), competitors.get(7));
         quarterfinalMatch2 = new Match(competitors.get(1), competitors.get(6));
