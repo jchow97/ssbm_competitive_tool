@@ -23,6 +23,8 @@ public class MeleeAppUI extends JPanel {
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
 
+    private static final String searchString = "Search";
+    private JTextField playerName;
 
     public MeleeAppUI() {
 
@@ -30,7 +32,7 @@ public class MeleeAppUI extends JPanel {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         //Create and set up the window.
-        JFrame frame = new JFrame("GridBagLayoutUI");
+        JFrame frame = new JFrame("Melee Player Database App");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Set up the content pane.
@@ -42,7 +44,7 @@ public class MeleeAppUI extends JPanel {
 
     }
 
-    public static void addComponentsToPane(Container pane) {
+    public void addComponentsToPane(Container pane) {
         if (RIGHT_TO_LEFT) {
             pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         }
@@ -79,26 +81,54 @@ public class MeleeAppUI extends JPanel {
         pane.add(button, c);
 
 
-
-        PlayerListUI list = new PlayerListUI();
+        PlayerDatabaseUI list = new PlayerDatabaseUI();
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.ipady = 800;      //make this component tall
+        c.ipady = 200;      //make this component tall
         c.weightx = 0.0;
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
         pane.add(list, c);
 
-        button = new JButton("Search");
+        JButton hireButton = new JButton(searchString);
+//        PlayerListUI.HireListener hireListener = new PlayerListUI.HireListener(hireButton);
+        hireButton.setActionCommand(searchString);
+//        hireButton.addActionListener(hireListener);
+        hireButton.setEnabled(false);
+
+        playerName = new JTextField(10);
+//        employeeName.addActionListener(hireListener);
+//        employeeName.getDocument().addDocumentListener(hireListener);
+//        String name = listModel.getElementAt(
+//                list.getSelectedIndex()).toString();
+
+        //Create a panel that uses BoxLayout.
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new BoxLayout(buttonPane,
+                BoxLayout.LINE_AXIS));
+//        buttonPane.add(fireButton);
+//        buttonPane.add(Box.createHorizontalStrut(5));
+//        buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+//        buttonPane.add(Box.createHorizontalStrut(5));
+        buttonPane.add(playerName);
+        buttonPane.add(hireButton);
+        buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+
+//        add(listScrollPane, BorderLayout.CENTER);
+
+//        pane.add(buttonPane, c);
+
+//        button = new JButton("Search");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 0;       //reset to default
         c.weighty = 1.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_END; //bottom of space
 //        c.insets = new Insets(10,0,0,0);  //top padding
-        c.gridx = 1;       //aligned with button 2
-        c.gridwidth = 2;   //2 columns wide
+        c.gridx = 0;       //aligned with button 2
+        c.gridwidth = 3;   //2 columns wide
         c.gridy = 2;       //third row
-        pane.add(button, c);
+//        pane.add(button, c);
+        pane.add(buttonPane, c);
     }
 
 
