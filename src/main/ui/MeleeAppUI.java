@@ -6,6 +6,8 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
@@ -64,6 +66,9 @@ public class MeleeAppUI extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 0;
+        AddListener addListener = new AddListener(button);
+        button.setActionCommand("Add");
+        button.addActionListener(addListener);
         pane.add(button, c);
 
         button = new JButton("Load");
@@ -90,11 +95,11 @@ public class MeleeAppUI extends JPanel {
         c.gridy = 1;
         pane.add(list, c);
 
-        JButton hireButton = new JButton(searchString);
-//        PlayerListUI.HireListener hireListener = new PlayerListUI.HireListener(hireButton);
-        hireButton.setActionCommand(searchString);
-//        hireButton.addActionListener(hireListener);
-        hireButton.setEnabled(false);
+        JButton searchButton = new JButton(searchString);
+//        PlayerListUI.HireListener hireListener = new PlayerListUI.HireListener(searchButton);
+        searchButton.setActionCommand(searchString);
+//        searchButton.addActionListener(hireListener);
+        searchButton.setEnabled(false);
 
         playerName = new JTextField(10);
 //        employeeName.addActionListener(hireListener);
@@ -111,7 +116,7 @@ public class MeleeAppUI extends JPanel {
 //        buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
 //        buttonPane.add(Box.createHorizontalStrut(5));
         buttonPane.add(playerName);
-        buttonPane.add(hireButton);
+        buttonPane.add(searchButton);
         buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
 //        add(listScrollPane, BorderLayout.CENTER);
@@ -129,6 +134,46 @@ public class MeleeAppUI extends JPanel {
         c.gridy = 2;       //third row
 //        pane.add(button, c);
         pane.add(buttonPane, c);
+    }
+
+    class AddListener implements ActionListener {
+        private boolean alreadyEnabled = false;
+        private JButton button;
+
+        public AddListener(JButton button) {
+            this.button = button;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+
+            new AddPlayerUI();
+        }
+    }
+
+    class SaveListener implements ActionListener {
+        private boolean alreadyEnabled = false;
+        private JButton button;
+
+        public SaveListener(JButton button) {
+            this.button = button;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            //TODO
+        }
+    }
+
+    class LoadListener implements ActionListener {
+        private boolean alreadyEnabled = false;
+        private JButton button;
+
+        public LoadListener(JButton button) {
+            this.button = button;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            //TODO
+        }
     }
 
 
