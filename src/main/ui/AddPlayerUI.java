@@ -26,16 +26,19 @@ public class AddPlayerUI extends JPanel {
             p.add(textField);
         }
 
+        JLabel l = new JLabel("", JLabel.TRAILING);
+        p.add(l);
         //Create add button
         JButton button = new JButton("Add");
         FinalAddListener addListener = new FinalAddListener(button);
         button.setActionCommand("Add");
         button.addActionListener(addListener);
+        l.setLabelFor(button);
         p.add(button);
 
         //Lay out the panel.
         SpringUtilities.makeCompactGrid(p,
-                    numPairs, 2, //rows, cols
+                    numPairs + 1, 2, //rows, cols
                 6, 6,        //initX, initY
                 6, 6);       //xPad, yPad
 

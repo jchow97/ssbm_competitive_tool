@@ -3,6 +3,8 @@ package ui;
  * PlayerDatabaseUI.java requires no other files.
  */
 
+import model.Player;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -11,15 +13,18 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class PlayerDatabaseUI extends JPanel {
     private boolean debug = false;
 
-    public PlayerDatabaseUI() {
+    public PlayerDatabaseUI(ArrayList<Player> playerList) {
         super(new GridLayout(1,0));
 
         String[] columnNames = {"Rank", "Player", "Wins", "Losses", "Characters"};
 
+        // static array of array type, will need to play around with it and probably need to access
+        // specific indexes before adding/modifying elements.
         Object[][] data = {
                 {1, "mang0", 3, 0, "Fox, Falco"},
                 {"John", "Doe",
@@ -31,6 +36,7 @@ public class PlayerDatabaseUI extends JPanel {
                 {"Joe", "Brown",
                         "Pool", new Integer(10), new Boolean(false)}
         };
+
 
         final JTable table = new JTable(data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
@@ -67,33 +73,33 @@ public class PlayerDatabaseUI extends JPanel {
         System.out.println("--------------------------");
     }
 
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("PlayerDatabaseUI");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//    /**
+//     * Create the GUI and show it.  For thread safety,
+//     * this method should be invoked from the
+//     * event-dispatching thread.
+//     */
+//    private static void createAndShowGUI() {
+//        //Create and set up the window.
+//        JFrame frame = new JFrame("PlayerDatabaseUI");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//        //Create and set up the content pane.
+//        PlayerDatabaseUI newContentPane = new PlayerDatabaseUI();
+//        newContentPane.setOpaque(true); //content panes must be opaque
+//        frame.setContentPane(newContentPane);
+//
+//        //Display the window.
+//        frame.pack();
+//        frame.setVisible(true);
+//    }
 
-        //Create and set up the content pane.
-        PlayerDatabaseUI newContentPane = new PlayerDatabaseUI();
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(newContentPane);
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//        //Schedule a job for the event-dispatching thread:
+//        //creating and showing this application's GUI.
+//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                createAndShowGUI();
+//            }
+//        });
+//    }
 }
