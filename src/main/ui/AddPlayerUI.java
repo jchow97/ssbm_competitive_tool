@@ -48,7 +48,7 @@ public class AddPlayerUI extends JPanel {
         p.add(button);
 
         //Lay out the panel.
-//        SpringUtilities.makeCompactGrid(p,numPairs + 1, 2, 6, 6, 6, 6);
+        SpringUtilities.makeCompactGrid(p,numPairs + 1, 2, 6, 6, 6, 6);
 
         //Set up the content pane.
         p.setOpaque(true);  //content panes must be opaque
