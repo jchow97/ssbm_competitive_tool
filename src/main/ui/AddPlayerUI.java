@@ -77,6 +77,7 @@ public class AddPlayerUI extends JPanel {
         return playerList;
     }
 
+    // ActionListener for the Add button in the Add Player window.
     class FinalAddListener implements ActionListener {
         private JFrame frame;
 
@@ -85,7 +86,7 @@ public class AddPlayerUI extends JPanel {
             this.frame = frame;
         }
 
-        // EFFECTS: Adds the new player to playerList and updates UI.
+        // EFFECTS: Adds the new player based on text field information to playerList and updates UI.
         public void actionPerformed(ActionEvent e) {
             ArrayList<String> newPlayerDetails = new ArrayList<>();
 

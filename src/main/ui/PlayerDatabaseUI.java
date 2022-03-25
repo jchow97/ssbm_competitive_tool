@@ -5,25 +5,35 @@ package ui;
 
 import model.Player;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import static java.lang.String.format;
 
 // Generates a panel to visualize the player database.
 // Code modified based on SimpleTableDemo from Oracle.
 public class PlayerDatabaseUI extends JPanel {
     private boolean debug = false;
+    MeleeAppUI mainFrame;
+    JTable table;
+
 
     // REQUIRES:
     // MODIFIES:
     // EFFECTS: constructs the player table component of the UI.
-    public PlayerDatabaseUI(ArrayList<Player> playerList) {
+    public PlayerDatabaseUI(ArrayList<Player> playerList, MeleeAppUI mainFrame) {
         super(new GridLayout(1,0));
+        this.mainFrame = mainFrame;
 
         String[] columnNames = {"Rank", "Player", "Wins", "Losses", "Characters"};
 
@@ -31,17 +41,18 @@ public class PlayerDatabaseUI extends JPanel {
 
         addPlayersToData(data, playerList);
 
-        final JTable table = new JTable(data, columnNames);
+        table = new JTable(data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(true);
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
 
-        if (debug) {
-            table.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    printDebugData(table);
-                }
-            });
-        }
+            // EFFECTS: Reloads graphic of main application window based on row mouse clicked.
+            public void valueChanged(ListSelectionEvent e) {
+                String character = table.getValueAt(table.getSelectedRow(), 4).toString();
+                mainFrame.reloadGraphic(character);
+            }
+        });
 
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
@@ -71,22 +82,5 @@ public class PlayerDatabaseUI extends JPanel {
                 }
             }
         }
-    }
-
-    // EFFECTS: prints debug data onto command line.
-    private void printDebugData(JTable table) {
-        int numRows = table.getRowCount();
-        int numCols = table.getColumnCount();
-        javax.swing.table.TableModel model = table.getModel();
-
-        System.out.println("Value of data: ");
-        for (int i = 0; i < numRows; i++) {
-            System.out.print("    row " + i + ":");
-            for (int j = 0; j < numCols; j++) {
-                System.out.print("  " + model.getValueAt(i, j));
-            }
-            System.out.println();
-        }
-        System.out.println("--------------------------");
     }
 }
