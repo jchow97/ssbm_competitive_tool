@@ -5,6 +5,7 @@ import javax.swing.SpringLayout;
 import java.awt.*;
 
 // Java Class copied from Oracle. Used to provide support functionality to SpringForm layout used in AddPlayerUI.
+// Changed variable names and suppressed method length to adhere to Checkstyle. Advised with TA during office hours.
 /**
  * A 1.4 file that provides utility methods for
  * creating form- or grid-style layouts with SpringLayout.
