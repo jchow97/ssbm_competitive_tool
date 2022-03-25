@@ -1,9 +1,13 @@
 package ui;
 
-import java.awt.Component;
-import java.awt.Container;
+import model.GameCharacter;
+import model.Player;
+import model.exception.GameCharacterException;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class AddPlayerUI extends JPanel {
@@ -12,9 +16,18 @@ public class AddPlayerUI extends JPanel {
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    public AddPlayerUI() {
+
+    private ArrayList<Player> playerList;
+    private MeleeAppUI mainFrame;
+
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: constructs the Add Player form component of the UI.
+    public AddPlayerUI(ArrayList<Player> playerList, MeleeAppUI mainFrame) {
         String[] labels = {"Player Name: ", "Wins: ", "Losses: ", "Character 1: ", "Character 2: "};
         int numPairs = labels.length;
+        this.playerList = playerList;
+        this.mainFrame = mainFrame;
 
         //Create and populate the panel.
         JPanel p = new JPanel(new SpringLayout());
@@ -26,11 +39,12 @@ public class AddPlayerUI extends JPanel {
             p.add(textField);
         }
 
+        JFrame frame = new JFrame("Add New Player");
         JLabel l = new JLabel("", JLabel.TRAILING);
         p.add(l);
         //Create add button
         JButton button = new JButton("Add");
-        FinalAddListener addListener = new FinalAddListener(button);
+        FinalAddListener addListener = new FinalAddListener(button, frame);
         button.setActionCommand("Add");
         button.addActionListener(addListener);
         l.setLabelFor(button);
@@ -44,8 +58,8 @@ public class AddPlayerUI extends JPanel {
 
 
         //Create and set up the window.
-        JFrame frame = new JFrame("Add New Player");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        JFrame frame = new JFrame("Add New Player");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Set up the content pane.
         p.setOpaque(true);  //content panes must be opaque
@@ -56,26 +70,56 @@ public class AddPlayerUI extends JPanel {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new AddPlayerUI();
-            }
-        });
+
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
     }
+
+//    public static void main(String[] args) {
+//        //Schedule a job for the event-dispatching thread:
+//        //creating and showing this application's GUI.
+//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                new AddPlayerUI();
+//            }
+//        });
+//    }
 
     class FinalAddListener implements ActionListener {
         private boolean alreadyEnabled = false;
         private JButton button;
+        private JFrame frame;
 
-        public FinalAddListener(JButton button) {
+        public FinalAddListener(JButton button, JFrame frame) {
             this.button = button;
+            this.frame = frame;
         }
 
         public void actionPerformed(ActionEvent e) {
-            // TODO
+            ArrayList<String> newPlayerDetails = new ArrayList<>();
+
+            for (Component component : frame.getContentPane().getComponents()) {
+                if (component instanceof JTextField) {
+                    newPlayerDetails.add(((JTextField) component).getText());
+                }
+            }
+
+            int lowestRank = playerList.size() + 1;
+            ArrayList<GameCharacter> newPlayerCharList = new ArrayList<>();
+            try {
+                newPlayerCharList.add(new GameCharacter(newPlayerDetails.get(3)));
+                newPlayerCharList.add(new GameCharacter(newPlayerDetails.get(4)));
+            } catch (GameCharacterException j) {
+                System.out.println("Invalid character, please try again.");
+            }
+
+
+            Player newPlayer = new Player(newPlayerDetails.get(0), Integer.valueOf(newPlayerDetails.get(1)),
+                    Integer.valueOf(newPlayerDetails.get(2)), newPlayerCharList, lowestRank, 0);
+
+            playerList.add(newPlayer);
+            mainFrame.refreshWindow(playerList);
+            frame.dispose();
         }
     }
 }

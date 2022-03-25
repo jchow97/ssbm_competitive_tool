@@ -3,7 +3,9 @@ package ui;
  * PlayerDatabaseUI.java requires no other files.
  */
 
+import model.GameCharacter;
 import model.Player;
+import model.exception.GameCharacterException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,10 +16,14 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerDatabaseUI extends JPanel {
     private boolean debug = false;
 
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: constructs the player table component of the UI.
     public PlayerDatabaseUI(ArrayList<Player> playerList) {
         super(new GridLayout(1,0));
 
@@ -25,17 +31,37 @@ public class PlayerDatabaseUI extends JPanel {
 
         // static array of array type, will need to play around with it and probably need to access
         // specific indexes before adding/modifying elements.
-        Object[][] data = {
-                {1, "mang0", 3, 0, "Fox, Falco"},
-                {"John", "Doe",
-                        "Rowing", new Integer(3), new Boolean(true)},
-                {"Sue", "Black",
-                        "Knitting", new Integer(2), new Boolean(false)},
-                {"Jane", "White",
-                        "Speed reading", new Integer(20), new Boolean(true)},
-                {"Joe", "Brown",
-                        "Pool", new Integer(10), new Boolean(false)}
-        };
+//        Object[][] data = {
+//                {testPlayer2.getRank(), "mang0", 3, 0, "Fox, Falco"},
+//                {"John", "Doe",
+//                        "Rowing", new Integer(3), new Boolean(true)},
+//                {"Sue", "Black",
+//                        "Knitting", new Integer(2), new Boolean(false)},
+//                {"Jane", "White",
+//                        "Speed reading", new Integer(20), new Boolean(true)},
+//                {"Joe", "Brown",
+//                        "Pool", new Integer(10), new Boolean(false)}
+//        };
+
+        Object[][] data = new Object[playerList.size()][5];
+
+        for (int i = 0; i < playerList.size(); i++) {
+            Player player = playerList.get(i);
+            for (int j = 0; j < 5; j++) {
+                if (j == 0) {
+                    data[i][j] = playerList.get(i).getRank();
+                } else if (j == 1) {
+                    data[i][j] = playerList.get(i).getName();
+                } else if (j == 2) {
+                    data[i][j] = playerList.get(i).getWins();
+                } else if (j == 3) {
+                    data[i][j] = playerList.get(i).getLosses();
+                } else {
+                    // add if statement here for 1 char vs 2 chars
+                    data[i][j] = playerList.get(i).getMainChars().get(0).getName();
+                }
+            }
+        }
 
 
         final JTable table = new JTable(data, columnNames);

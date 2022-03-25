@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class MeleeAppUI extends JPanel {
     private static final int HEIGHT = 1200;
     private static final String JSON_STORE = "./data/player.json";
     private ArrayList<Player> playerList;
-    // private Menu m;
+    private JFrame frame;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     static final boolean shouldFill = true;
@@ -29,13 +30,14 @@ public class MeleeAppUI extends JPanel {
     private static final String searchString = "Search";
     private JTextField playerName;
 
+    // EFFECTS: constructs the UI of the Melee application.
     public MeleeAppUI() {
 
         playerList = new ArrayList<>();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         //Create and set up the window.
-        JFrame frame = new JFrame("Melee Player Database App");
+        frame = new JFrame("Melee Player Database App");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Set up the content pane.
@@ -47,6 +49,9 @@ public class MeleeAppUI extends JPanel {
 
     }
 
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: creates a GridBagLayout and adds different components to the Layout.
     public void addComponentsToPane(Container pane) {
         if (RIGHT_TO_LEFT) {
             pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -67,10 +72,13 @@ public class MeleeAppUI extends JPanel {
         addSearchBar(pane, c);
     }
 
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: creates and adds the search bar component of the UI.
     private void addSearchBar(Container pane, GridBagConstraints c) {
         JButton searchButton = new JButton(searchString);
         searchButton.setActionCommand(searchString);
-        searchButton.setEnabled(false);
+//        searchButton.setEnabled(false);
         playerName = new JTextField(10);
 
         //Create a panel that uses BoxLayout.
@@ -79,7 +87,7 @@ public class MeleeAppUI extends JPanel {
                 BoxLayout.LINE_AXIS));
         buttonPane.add(playerName);
         buttonPane.add(searchButton);
-        buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 0;       //reset to default
@@ -88,9 +96,17 @@ public class MeleeAppUI extends JPanel {
         c.gridx = 0;       //aligned with button 2
         c.gridwidth = 3;   //2 columns wide
         c.gridy = 2;       //third row
+
+        SearchListener searchListener = new SearchListener(searchButton, playerName);
+        searchButton.addActionListener(searchListener);
+
         pane.add(buttonPane, c);
     }
 
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: creates and adds the 'Add', 'Load', and 'Save' buttons to the UI.
+    // TODO implement helper functions to simplify this method
     private void addTopRowButtons(Container pane, GridBagConstraints c) {
         JButton button;
         String[] topButtonNames = {"Add", "Load", "Save"};
@@ -120,6 +136,9 @@ public class MeleeAppUI extends JPanel {
         }
     }
 
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: create and add the player list to the UI
     private void makePlayerDatabaseUI(Container pane, GridBagConstraints c, ArrayList<Player> playerList) {
         PlayerDatabaseUI list = new PlayerDatabaseUI(playerList);
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -131,6 +150,19 @@ public class MeleeAppUI extends JPanel {
         pane.add(list, c);
     }
 
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: saves playerList data onto JSON file.
+    public void saveMeleeApp() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(playerList);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
     // Code based on JsonSerializationDemo
     // REQUIRES:
     // MODIFIES:
@@ -138,8 +170,12 @@ public class MeleeAppUI extends JPanel {
     public void loadMeleeApp() {
         try {
             try {
-                playerList = jsonReader.read();
-                revalidate();
+                this.playerList = jsonReader.read();
+                Container pane = frame.getContentPane();
+                pane.removeAll();
+                addComponentsToPane(pane);
+                pane.revalidate();
+                pane.repaint();
             } catch (GameCharacterException e) {
                 System.out.println("Unable to load player database: Contains invalid Game Character.");
             }
@@ -149,6 +185,50 @@ public class MeleeAppUI extends JPanel {
         }
     }
 
+    public void refreshWindow(ArrayList<Player> playerList) {
+        this.playerList = playerList;
+        Container pane = frame.getContentPane();
+        pane.removeAll();
+        addComponentsToPane(pane);
+        pane.revalidate();
+        pane.repaint();
+    }
+
+    public void addPlayerUI() {
+        AddPlayerUI addPlayerUI = new AddPlayerUI(playerList, this);
+    }
+
+
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: Shows Add Player form when 'Add' button is pressed.
+    class SearchListener implements ActionListener {
+        private boolean alreadyEnabled = false;
+        private JButton button;
+        private JTextField textField;
+
+        public SearchListener(JButton button, JTextField textField) {
+            this.button = button;
+            this.textField = textField;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            // make changes to playerList
+            String keyword = textField.getText();
+            ArrayList<Player> newList = new ArrayList<>();
+            for (Player player : playerList) {
+                if (player.getName().contains(keyword)) {
+                    newList.add(player);
+                }
+            }
+            playerList = newList;
+            refreshWindow(playerList);
+        }
+    }
+
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: Shows Add Player form when 'Add' button is pressed.
     class AddListener implements ActionListener {
         private boolean alreadyEnabled = false;
         private JButton button;
@@ -158,11 +238,15 @@ public class MeleeAppUI extends JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
-
-            new AddPlayerUI();
+            addPlayerUI();
         }
     }
 
+
+
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: saves player data into JSON format when 'Save' button is pressed.
     class SaveListener implements ActionListener {
         private boolean alreadyEnabled = false;
         private JButton button;
@@ -172,10 +256,13 @@ public class MeleeAppUI extends JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
-            //TODO
+            saveMeleeApp();
         }
     }
 
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: Loads player data from JSON when 'Load' button is pressed.
     class LoadListener implements ActionListener {
         private boolean alreadyEnabled = false;
         private JButton button;
