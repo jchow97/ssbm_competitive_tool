@@ -14,7 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// Competitive Super Smash Bros. Melee Application
+// Class is no longer used in Phase 3 of the project.
+// Command Line UI for Competitive Super Smash Bros. Melee Application
 public class MeleeApp {
     private static final String JSON_STORE = "./data/player.json";
     private Scanner input;

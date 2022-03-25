@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+// Java Swing UI for Competitive Super Smash Bros. Melee Application
 // Code is based off GridBagLayoutDemo code from oracle documentation website.
 public class MeleeAppUI extends JPanel {
     private static final int WIDTH = 1600;
@@ -26,16 +26,17 @@ public class MeleeAppUI extends JPanel {
     static final boolean shouldFill = true;
     static final boolean shouldWeightX = true;
     static final boolean RIGHT_TO_LEFT = false;
+    private static final String[] topButtonNames = {"Add", "Load", "Save"};
 
     private static final String searchString = "Search";
     private JTextField playerName;
 
     // EFFECTS: constructs the UI of the Melee application.
     public MeleeAppUI() {
-
         playerList = new ArrayList<>();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+
         //Create and set up the window.
         frame = new JFrame("Melee Player Database App");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,9 +54,9 @@ public class MeleeAppUI extends JPanel {
     // MODIFIES:
     // EFFECTS: creates a GridBagLayout and adds different components to the Layout.
     public void addComponentsToPane(Container pane) {
-        if (RIGHT_TO_LEFT) {
-            pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        }
+//        if (RIGHT_TO_LEFT) {
+//            pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+//        }
 
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -63,7 +64,6 @@ public class MeleeAppUI extends JPanel {
             //natural height, maximum width
             c.fill = GridBagConstraints.HORIZONTAL;
         }
-
 
         addTopRowButtons(pane, c);
 
@@ -76,9 +76,9 @@ public class MeleeAppUI extends JPanel {
     // MODIFIES:
     // EFFECTS: creates and adds the search bar component of the UI.
     private void addSearchBar(Container pane, GridBagConstraints c) {
+        //Creates a new Button and TextField
         JButton searchButton = new JButton(searchString);
         searchButton.setActionCommand(searchString);
-//        searchButton.setEnabled(false);
         playerName = new JTextField(10);
 
         //Create a panel that uses BoxLayout.
@@ -97,19 +97,20 @@ public class MeleeAppUI extends JPanel {
         c.gridwidth = 3;   //2 columns wide
         c.gridy = 2;       //third row
 
+        //Attaches listener to button.
         SearchListener searchListener = new SearchListener(searchButton, playerName);
         searchButton.addActionListener(searchListener);
 
+        //Adds button to the pane.
         pane.add(buttonPane, c);
     }
+
 
     // REQUIRES:
     // MODIFIES:
     // EFFECTS: creates and adds the 'Add', 'Load', and 'Save' buttons to the UI.
-    // TODO implement helper functions to simplify this method
     private void addTopRowButtons(Container pane, GridBagConstraints c) {
         JButton button;
-        String[] topButtonNames = {"Add", "Load", "Save"};
         int numButtons = topButtonNames.length;
         for (int i = 0; i < numButtons; i++) {
             button = new JButton(topButtonNames[i]);
@@ -117,22 +118,29 @@ public class MeleeAppUI extends JPanel {
             c.fill = GridBagConstraints.HORIZONTAL;
             c.gridx = i;
             c.gridy = 0;
-            if (i == 0) {
-                AddListener addListener = new AddListener(button);
-                button.setActionCommand(topButtonNames[i]);
-                button.addActionListener(addListener);
-                pane.add(button, c);
-            } else if (i == 1) {
-                LoadListener loadListener = new LoadListener(button);
-                button.setActionCommand(topButtonNames[i]);
-                button.addActionListener(loadListener);
-                pane.add(button, c);
-            } else if (i == 2) {
-                SaveListener saveListener = new SaveListener(button);
-                button.setActionCommand(topButtonNames[i]);
-                button.addActionListener(saveListener);
-                pane.add(button, c);
-            }
+            attachListener(i, button, pane, c);
+        }
+    }
+
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: Attaches action listener to button based on button name.
+    private void attachListener(int i, JButton button, Container pane, GridBagConstraints c) {
+        if (i == 0) {
+            AddListener addListener = new AddListener(button);
+            button.setActionCommand(topButtonNames[i]);
+            button.addActionListener(addListener);
+            pane.add(button, c);
+        } else if (i == 1) {
+            LoadListener loadListener = new LoadListener(button);
+            button.setActionCommand(topButtonNames[i]);
+            button.addActionListener(loadListener);
+            pane.add(button, c);
+        } else if (i == 2) {
+            SaveListener saveListener = new SaveListener(button);
+            button.setActionCommand(topButtonNames[i]);
+            button.addActionListener(saveListener);
+            pane.add(button, c);
         }
     }
 
@@ -243,7 +251,6 @@ public class MeleeAppUI extends JPanel {
     }
 
 
-
     // REQUIRES:
     // MODIFIES:
     // EFFECTS: saves player data into JSON format when 'Save' button is pressed.
@@ -274,16 +281,5 @@ public class MeleeAppUI extends JPanel {
         public void actionPerformed(ActionEvent e) {
             loadMeleeApp();
         }
-    }
-
-
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new MeleeAppUI();
-            }
-        });
     }
 }

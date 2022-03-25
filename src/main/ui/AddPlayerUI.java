@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
+// Creates UI window for Adding a new Player.
+// Code modified based on SpringForm.java examples from Oracle.
 public class AddPlayerUI extends JPanel {
     /**
      * Create the GUI and show it.  For thread safety,
@@ -29,37 +31,24 @@ public class AddPlayerUI extends JPanel {
         this.playerList = playerList;
         this.mainFrame = mainFrame;
 
-        //Create and populate the panel.
         JPanel p = new JPanel(new SpringLayout());
-        for (int i = 0; i < numPairs; i++) {
-            JLabel l = new JLabel(labels[i], JLabel.TRAILING);
-            p.add(l);
-            JTextField textField = new JTextField(10);
-            l.setLabelFor(textField);
-            p.add(textField);
-        }
+
+        createPanels(p, numPairs, labels);
 
         JFrame frame = new JFrame("Add New Player");
         JLabel l = new JLabel("", JLabel.TRAILING);
         p.add(l);
+
         //Create add button
         JButton button = new JButton("Add");
-        FinalAddListener addListener = new FinalAddListener(button, frame);
+        FinalAddListener addListener = new FinalAddListener(frame);
         button.setActionCommand("Add");
         button.addActionListener(addListener);
         l.setLabelFor(button);
         p.add(button);
 
         //Lay out the panel.
-        SpringUtilities.makeCompactGrid(p,
-                    numPairs + 1, 2, //rows, cols
-                6, 6,        //initX, initY
-                6, 6);       //xPad, yPad
-
-
-        //Create and set up the window.
-//        JFrame frame = new JFrame("Add New Player");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        SpringUtilities.makeCompactGrid(p,numPairs + 1, 2, 6, 6, 6, 6);
 
         //Set up the content pane.
         p.setOpaque(true);  //content panes must be opaque
@@ -70,31 +59,33 @@ public class AddPlayerUI extends JPanel {
         frame.setVisible(true);
     }
 
+    // REQUIRES:
+    // MODFIIES:
+    // EFFECTS: Create and populate the panel.
+    private void createPanels(JPanel p, int numPairs, String[] labels) {
+        for (int i = 0; i < numPairs; i++) {
+            JLabel l = new JLabel(labels[i], JLabel.TRAILING);
+            p.add(l);
+            JTextField textField = new JTextField(10);
+            l.setLabelFor(textField);
+            p.add(textField);
+        }
+    }
 
+    // EFFECTS: returns playerList
     public ArrayList<Player> getPlayerList() {
         return playerList;
     }
 
-//    public static void main(String[] args) {
-//        //Schedule a job for the event-dispatching thread:
-//        //creating and showing this application's GUI.
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                new AddPlayerUI();
-//            }
-//        });
-//    }
-
     class FinalAddListener implements ActionListener {
-        private boolean alreadyEnabled = false;
-        private JButton button;
         private JFrame frame;
 
-        public FinalAddListener(JButton button, JFrame frame) {
-            this.button = button;
+        // EFFECTS: Initializes the button listener.
+        public FinalAddListener(JFrame frame) {
             this.frame = frame;
         }
 
+        // EFFECTS: Adds the new player to playerList and updates UI.
         public void actionPerformed(ActionEvent e) {
             ArrayList<String> newPlayerDetails = new ArrayList<>();
 
@@ -113,9 +104,8 @@ public class AddPlayerUI extends JPanel {
                 System.out.println("Invalid character, please try again.");
             }
 
-
-            Player newPlayer = new Player(newPlayerDetails.get(0), Integer.valueOf(newPlayerDetails.get(1)),
-                    Integer.valueOf(newPlayerDetails.get(2)), newPlayerCharList, lowestRank, 0);
+            Player newPlayer = new Player(newPlayerDetails.get(0), Integer.parseInt(newPlayerDetails.get(1)),
+                    Integer.parseInt(newPlayerDetails.get(2)), newPlayerCharList, lowestRank, 0);
 
             playerList.add(newPlayer);
             mainFrame.refreshWindow(playerList);

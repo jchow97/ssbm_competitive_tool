@@ -91,5 +91,17 @@
         "winRate": 0.5,
         "losses": 1,
         "mainChars": [{"name": "Fox"}]
+    },
+    {
+        "wins": 2,
+        "name": "Jeffrey Two",
+        "rank": 10,
+        "tournamentWins": 0,
+        "winRate": 0.4,
+        "losses": 3,
+        "mainChars": [
+            {"name": "Falco"},
+            {"name": "Marth"}
+        ]
     }
 ]}

@@ -3,11 +3,8 @@ package ui;
  * PlayerDatabaseUI.java requires no other files.
  */
 
-import model.GameCharacter;
 import model.Player;
-import model.exception.GameCharacterException;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,8 +13,9 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.List;
 
+// Generates a panel to visualize the player database.
+// Code modified based on SimpleTableDemo from Oracle.
 public class PlayerDatabaseUI extends JPanel {
     private boolean debug = false;
 
@@ -29,40 +27,9 @@ public class PlayerDatabaseUI extends JPanel {
 
         String[] columnNames = {"Rank", "Player", "Wins", "Losses", "Characters"};
 
-        // static array of array type, will need to play around with it and probably need to access
-        // specific indexes before adding/modifying elements.
-//        Object[][] data = {
-//                {testPlayer2.getRank(), "mang0", 3, 0, "Fox, Falco"},
-//                {"John", "Doe",
-//                        "Rowing", new Integer(3), new Boolean(true)},
-//                {"Sue", "Black",
-//                        "Knitting", new Integer(2), new Boolean(false)},
-//                {"Jane", "White",
-//                        "Speed reading", new Integer(20), new Boolean(true)},
-//                {"Joe", "Brown",
-//                        "Pool", new Integer(10), new Boolean(false)}
-//        };
-
         Object[][] data = new Object[playerList.size()][5];
 
-        for (int i = 0; i < playerList.size(); i++) {
-            Player player = playerList.get(i);
-            for (int j = 0; j < 5; j++) {
-                if (j == 0) {
-                    data[i][j] = playerList.get(i).getRank();
-                } else if (j == 1) {
-                    data[i][j] = playerList.get(i).getName();
-                } else if (j == 2) {
-                    data[i][j] = playerList.get(i).getWins();
-                } else if (j == 3) {
-                    data[i][j] = playerList.get(i).getLosses();
-                } else {
-                    // add if statement here for 1 char vs 2 chars
-                    data[i][j] = playerList.get(i).getMainChars().get(0).getName();
-                }
-            }
-        }
-
+        addPlayersToData(data, playerList);
 
         final JTable table = new JTable(data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
@@ -83,49 +50,43 @@ public class PlayerDatabaseUI extends JPanel {
         add(scrollPane);
     }
 
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: adds the playerList data into Object[][] format.
+    private void addPlayersToData(Object[][] data, ArrayList<Player> playerList) {
+        for (int i = 0; i < playerList.size(); i++) {
+            Player player = playerList.get(i);
+            for (int j = 0; j < 5; j++) {
+                if (j == 0) {
+                    data[i][j] = playerList.get(i).getRank();
+                } else if (j == 1) {
+                    data[i][j] = playerList.get(i).getName();
+                } else if (j == 2) {
+                    data[i][j] = playerList.get(i).getWins();
+                } else if (j == 3) {
+                    data[i][j] = playerList.get(i).getLosses();
+                } else {
+                    // add if statement here for 1 char vs 2 chars
+                    data[i][j] = playerList.get(i).getMainChars().get(0).getName();
+                }
+            }
+        }
+    }
+
+    // EFFECTS: prints debug data onto command line.
     private void printDebugData(JTable table) {
         int numRows = table.getRowCount();
         int numCols = table.getColumnCount();
         javax.swing.table.TableModel model = table.getModel();
 
         System.out.println("Value of data: ");
-        for (int i=0; i < numRows; i++) {
+        for (int i = 0; i < numRows; i++) {
             System.out.print("    row " + i + ":");
-            for (int j=0; j < numCols; j++) {
+            for (int j = 0; j < numCols; j++) {
                 System.out.print("  " + model.getValueAt(i, j));
             }
             System.out.println();
         }
         System.out.println("--------------------------");
     }
-
-//    /**
-//     * Create the GUI and show it.  For thread safety,
-//     * this method should be invoked from the
-//     * event-dispatching thread.
-//     */
-//    private static void createAndShowGUI() {
-//        //Create and set up the window.
-//        JFrame frame = new JFrame("PlayerDatabaseUI");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//        //Create and set up the content pane.
-//        PlayerDatabaseUI newContentPane = new PlayerDatabaseUI();
-//        newContentPane.setOpaque(true); //content panes must be opaque
-//        frame.setContentPane(newContentPane);
-//
-//        //Display the window.
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
-
-//    public static void main(String[] args) {
-//        //Schedule a job for the event-dispatching thread:
-//        //creating and showing this application's GUI.
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                createAndShowGUI();
-//            }
-//        });
-//    }
 }
