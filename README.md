@@ -35,4 +35,18 @@ members to evaluate player performance and use the data to formulate their own p
 - As a user, I want to be able to save my player database and related statistics to file.
 - As a user, I want to be able to load my player database and related statistics from file.
 - As a user, I want to be able to save an ongoing tournament to file.
-- As a suer, I want to be able to load and resume an ongoing tournament from file.
+- As a user, I want to be able to load and resume an ongoing tournament from file.
+
+## Phase 4: Task 2
+- Fri Apr 01 12:23:32 PDT 2022 Player: mang0 loaded from file. 
+- Fri Apr 01 12:23:32 PDT 2022 Player: Zain loaded from file.
+- Fri Apr 01 12:23:32 PDT 2022 Player: Plup loaded from file.
+- Fri Apr 01 12:23:32 PDT 2022 Player: iBDW loaded from file.
+- Fri Apr 01 12:23:32 PDT 2022 Player: Wizzrobe loaded from file.
+- Fri Apr 01 12:23:32 PDT 2022 Player: SFAT loaded from file.
+- Fri Apr 01 12:23:32 PDT 2022 Player: Hungrybox loaded from file.
+- Fri Apr 01 12:23:32 PDT 2022 Player: Leffen loaded from file.
+- Fri Apr 01 12:23:32 PDT 2022 Player: Jeffrey loaded from file.
+- Fri Apr 01 12:23:32 PDT 2022 Player: Jeffrey Two loaded from file.
+- Fri Apr 01 12:23:44 PDT 2022 Player: Jeffrey Three added.
+- Fri Apr 01 12:23:50 PDT 2022 Search for Jeffrey occurred.

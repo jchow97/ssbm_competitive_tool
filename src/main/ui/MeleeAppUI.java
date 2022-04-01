@@ -1,5 +1,6 @@
 package ui;
 
+import model.EventLog;
 import model.Player;
 import model.exception.GameCharacterException;
 import persistence.JsonReader;
@@ -8,8 +9,7 @@ import persistence.JsonWriter;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -44,7 +44,9 @@ public class MeleeAppUI extends JPanel {
 
         //Create and set up the window.
         frame = new JFrame("Melee Player Database App");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        frame.addWindowListener(new WindowListener());
 
         constraints = new GridBagConstraints();
         this.graphicCharacter = "Mario";
@@ -226,7 +228,6 @@ public class MeleeAppUI extends JPanel {
             } catch (GameCharacterException e) {
                 System.out.println("Unable to load player database: Contains invalid Game Character.");
             }
-            System.out.println("Loaded player database from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
@@ -270,8 +271,12 @@ public class MeleeAppUI extends JPanel {
                     newList.add(player);
                 }
             }
-            playerList = newList;
-            refreshWindow(playerList);
+            try {
+                playerList.get(0).logSearchEvent(keyword);
+            } catch (IndexOutOfBoundsException exception) {
+                // do nothing.
+            }
+            refreshWindow(newList);
         }
     }
 
@@ -321,6 +326,14 @@ public class MeleeAppUI extends JPanel {
         // EFFECTS: Loads current player data from JSON file.
         public void actionPerformed(ActionEvent e) {
             loadMeleeApp();
+        }
+    }
+
+    class WindowListener extends WindowAdapter {
+        public void windowClosing(WindowEvent e) {
+            EventLog events = EventLog.getInstance();
+            events.printLog();
+            System.exit(0);
         }
     }
 }

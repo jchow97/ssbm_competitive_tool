@@ -27,6 +27,7 @@ public class Player {
         // -1 represents unranked.
         rank = -1;
         tournamentWins = 0;
+        EventLog.getInstance().logEvent(new Event("Player: " + name + " added."));
     }
 
     // Constructor reconstructing players when sed for reading JSON.
@@ -41,6 +42,8 @@ public class Player {
         this.mainChars = mainChars;
         this.rank = rank;
         this.tournamentWins = tournamentWins;
+
+        EventLog.getInstance().logEvent(new Event("Player: " + name + " loaded from file."));
     }
 
     // Constructor used when adding new player object in UI.
@@ -54,6 +57,8 @@ public class Player {
         this.mainChars = mainChars;
         this.rank = rank;
         this.tournamentWins = tournamentWins;
+
+        EventLog.getInstance().logEvent(new Event("Player: " + name + " added."));
     }
 
     // REQUIRES:
@@ -163,4 +168,8 @@ public class Player {
         return tournamentWins;
     }
 
+    // EFFECTS: log event when player has been searched for.
+    public void logSearchEvent(String keyword) {
+        EventLog.getInstance().logEvent(new Event("Search for " + keyword + " occurred."));
+    }
 }
