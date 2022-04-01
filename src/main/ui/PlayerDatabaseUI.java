@@ -5,26 +5,21 @@ package ui;
 
 import model.Player;
 
-import javax.imageio.ImageIO;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.IOException;
+
 import java.util.ArrayList;
 
-import static java.lang.String.format;
 
 // Generates a panel to visualize the player database.
 // Code modified based on SimpleTableDemo from Oracle.
 public class PlayerDatabaseUI extends JPanel {
     private boolean debug = false;
     MeleeAppUI mainFrame;
+    ArrayList<Player> playerList;
     JTable table;
 
 
@@ -34,12 +29,13 @@ public class PlayerDatabaseUI extends JPanel {
     public PlayerDatabaseUI(ArrayList<Player> playerList, MeleeAppUI mainFrame) {
         super(new GridLayout(1,0));
         this.mainFrame = mainFrame;
+        this.playerList = playerList;
 
         String[] columnNames = {"Rank", "Player", "Wins", "Losses", "Characters"};
 
         Object[][] data = new Object[playerList.size()][5];
 
-        addPlayersToData(data, playerList);
+        addPlayersToData(data);
 
         table = new JTable(data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
@@ -64,7 +60,7 @@ public class PlayerDatabaseUI extends JPanel {
     // REQUIRES:
     // MODIFIES:
     // EFFECTS: adds the playerList data into Object[][] format.
-    private void addPlayersToData(Object[][] data, ArrayList<Player> playerList) {
+    private void addPlayersToData(Object[][] data) {
         for (int i = 0; i < playerList.size(); i++) {
             Player player = playerList.get(i);
             for (int j = 0; j < 5; j++) {

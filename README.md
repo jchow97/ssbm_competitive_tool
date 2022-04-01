@@ -38,6 +38,7 @@ members to evaluate player performance and use the data to formulate their own p
 - As a user, I want to be able to load and resume an ongoing tournament from file.
 
 ## Phase 4: Task 2
+This is a representative EventLog output for the GUI version of the application.
 - Fri Apr 01 12:23:32 PDT 2022 Player: mang0 loaded from file. 
 - Fri Apr 01 12:23:32 PDT 2022 Player: Zain loaded from file.
 - Fri Apr 01 12:23:32 PDT 2022 Player: Plup loaded from file.
@@ -50,3 +51,25 @@ members to evaluate player performance and use the data to formulate their own p
 - Fri Apr 01 12:23:32 PDT 2022 Player: Jeffrey Two loaded from file.
 - Fri Apr 01 12:23:44 PDT 2022 Player: Jeffrey Three added.
 - Fri Apr 01 12:23:50 PDT 2022 Search for Jeffrey occurred.
+
+## Phase 4: Task 3
+Even before constructing the UML diagram, I had already sensed that the program's structure 
+was poorly designed. After making the UML diagram, it has become clear that much refactoring
+can be done to improve the program structure and design of this program. For example, many of 
+the interclass relationships are not necessarily in the fields of the classes headers. The
+first change I would make is to ensure that every interclass relationship is represented in
+the fields of their respective classes. Secondly, I would heavily refactor the MeleeAppUI class.
+Each component of the GUI would have its own class, not just the AddPlayerUI and the
+PlayerDatabaseUI parts. That would give more consistency to navigating through the code.
+Additionally, I would refactor all of the ActionListeners or WindowListeners into a different
+packages, similar to the exceptions class. These two main changes would be a good place to start.
+Something that I realized during the end of phase 2 and the beginning of phase 3, was that the
+core structure between Player, Match, and Tournament felt inflexible. The classes in the model
+package did not adapt well to changes, nor did these classes feel flexible when working with
+the UI. I think that ultimately gave me the feeling that the program structure was poorly designed,
+which resulted in a lot of spaghetti code that became more and more apparent as the project
+progressed. I'm not completely sure what the solution is at this point, but the Player and Match
+classes are basic enough to stay as they are, as they represent a clear representation of what
+they should represent. However, I would look into the tournament class and how it interacts
+with the Match and Player class. More specifically, I would consider various different data
+structures for storing these objects that are more suited to what I am looking for.

@@ -36,7 +36,6 @@ public class AddPlayerUI extends JPanel {
         createPanels(p, numPairs, labels);
 
         JFrame frame = new JFrame("Add New Player");
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         JLabel l = new JLabel("", JLabel.TRAILING);
         p.add(l);
 
