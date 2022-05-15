@@ -2,6 +2,7 @@ package ui;
 
 import model.EventLog;
 import model.Player;
+import model.Tournament;
 import model.exception.GameCharacterException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -23,7 +24,7 @@ import static java.lang.String.format;
 public class MeleeAppUI extends JPanel {
 
     private static final String JSON_STORE = "./data/player.json";
-    private ArrayList<Player> playerList;
+    private Tournament tournament;
     private JFrame frame;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -38,7 +39,7 @@ public class MeleeAppUI extends JPanel {
 
     // EFFECTS: constructs the UI of the Melee application.
     public MeleeAppUI() {
-        playerList = new ArrayList<>();
+        tournament = new Tournament();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
@@ -75,7 +76,7 @@ public class MeleeAppUI extends JPanel {
 
         addTopRowButtons(pane);
 
-        makePlayerDatabaseUI(pane, playerList);
+        makePlayerDatabaseUI(pane, tournament.getCompetitors());
 
         addSearchBar(pane);
 
@@ -110,7 +111,7 @@ public class MeleeAppUI extends JPanel {
     // EFFECTS: updates graphicCharacter field and refreshes window.
     public void reloadGraphic(String graphicCharacter) {
         this.graphicCharacter = graphicCharacter;
-        refreshWindow(playerList);
+        refreshWindow(tournament.getCompetitors());
     }
 
     // REQUIRES:
@@ -209,7 +210,7 @@ public class MeleeAppUI extends JPanel {
     public void saveMeleeApp() {
         try {
             jsonWriter.open();
-            jsonWriter.write(playerList);
+            jsonWriter.write(tournament.getCompetitors());
             jsonWriter.close();
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
@@ -223,8 +224,8 @@ public class MeleeAppUI extends JPanel {
     public void loadMeleeApp() {
         try {
             try {
-                this.playerList = jsonReader.read();
-                refreshWindow(playerList);
+                tournament.setCompetitors(jsonReader.read());
+                refreshWindow(tournament.getCompetitors());
             } catch (GameCharacterException e) {
                 System.out.println("Unable to load player database: Contains invalid Game Character.");
             }
@@ -235,7 +236,7 @@ public class MeleeAppUI extends JPanel {
 
     // EFFECTS: Refreshes the main application window with updated player information.
     public void refreshWindow(ArrayList<Player> playerList) {
-        this.playerList = playerList;
+        tournament.setCompetitors(playerList);
         Container pane = frame.getContentPane();
         pane.removeAll();
         addComponentsToPane(pane);
@@ -245,7 +246,7 @@ public class MeleeAppUI extends JPanel {
 
     // EFFECTS: Initiates the Add Player Window.
     public void addPlayerUI() {
-        AddPlayerUI addPlayerUI = new AddPlayerUI(playerList, this);
+        AddPlayerUI addPlayerUI = new AddPlayerUI(tournament.getCompetitors(), this);
     }
 
 
@@ -265,18 +266,18 @@ public class MeleeAppUI extends JPanel {
         public void actionPerformed(ActionEvent e) {
             // make changes to playerList
             String keyword = textField.getText();
-            ArrayList<Player> newList = new ArrayList<>();
-            for (Player player : playerList) {
+            ArrayList<Player> playerList = new ArrayList<>();
+            for (Player player : tournament.getCompetitors()) {
                 if (player.getName().contains(keyword)) {
-                    newList.add(player);
+                    playerList.add(player);
                 }
             }
             try {
-                playerList.get(0).logSearchEvent(keyword);
+                tournament.getCompetitors().get(0).logSearchEvent(keyword);
             } catch (IndexOutOfBoundsException exception) {
                 // do nothing.
             }
-            refreshWindow(newList);
+            refreshWindow(playerList);
         }
     }
 

@@ -37,6 +37,37 @@ public class Tournament {
         winner = null;
     }
 
+    // EFFECTS: construct an 8-player tournament, with 4 empty matches.
+    public Tournament() {
+        this.competitors = new ArrayList<>();
+
+        quarterfinalMatch1 = new Match();
+        quarterfinalMatch2 = new Match();
+        quarterfinalMatch3 = new Match();
+        quarterfinalMatch4 = new Match();
+
+        quarterfinalMatches = new ArrayList<>();
+        quarterfinalMatches.add(quarterfinalMatch1);
+        quarterfinalMatches.add(quarterfinalMatch2);
+        quarterfinalMatches.add(quarterfinalMatch3);
+        quarterfinalMatches.add(quarterfinalMatch4);
+
+        winner = null;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: updates competitors list in tournament with given playerList and fills corresponding matches
+    public void setCompetitors(ArrayList<Player> competitors) {
+        this.competitors = competitors;
+
+        if (competitors.size() > 8) {
+            quarterfinalMatch1.setPlayers(competitors.get(0), competitors.get(7));
+            quarterfinalMatch2.setPlayers(competitors.get(1), competitors.get(6));
+            quarterfinalMatch3.setPlayers(competitors.get(2), competitors.get(5));
+            quarterfinalMatch4.setPlayers(competitors.get(3), competitors.get(4));
+        }
+    }
+
     // REQUIRES: grand final match to have a winner declared
     // MODIFIES: this
     // EFFECTS: declares a winner for the tournament and returns player.

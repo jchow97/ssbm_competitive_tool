@@ -19,9 +19,9 @@ import java.util.Scanner;
 public class MeleeApp {
     private static final String JSON_STORE = "./data/player.json";
     private Scanner input;
-    ArrayList<Player> playerList = new ArrayList<>();
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private Tournament tournament;
 
     // Code based after TellerApp's ui TellerApp code and WorkRoomApp code.
     // EFFECTS: runs the Melee application
@@ -30,6 +30,7 @@ public class MeleeApp {
         input.useDelimiter("\n");
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        tournament = new Tournament();
         runMelee();
     }
 
@@ -70,7 +71,6 @@ public class MeleeApp {
         System.out.println("\tq -> Quit");
     }
 
-    //TODO
     // Code adapted from TellerApp UI.
     // MODIFIES: this
     // EFFECTS: process user command from display menu.
@@ -103,7 +103,7 @@ public class MeleeApp {
     private void displayPlayerRankings() {
         System.out.printf("%-4s %-10s %-7s %-7s %-20s %-20s", "Rank", "Player", "Wins", "Losses", "Characters", "");
         System.out.println("\n---------------------------------------------------------------------------------");
-        for (Player player: playerList) {
+        for (Player player: tournament.getCompetitors()) {
             ArrayList<GameCharacter> characters = player.getMainChars();
             if (characters.size() == 2) {
                 System.out.printf("%-4d %-10s %-7d %-7d %-20s %-20s\n", player.getRank(), player.getName(),
@@ -122,7 +122,6 @@ public class MeleeApp {
     // MODIFIES: this
     // EFFECTS: prints tournament bracket with original 8 players onto console
     private void runTournament() {
-        Tournament tournament = new Tournament(playerList);
         System.out.println("THE BIGGEST BADDEST TOURNAMENT EVER");
 
         displayQuarterfinals(tournament);
@@ -149,7 +148,7 @@ public class MeleeApp {
         } else {
             System.out.println("Returning to Main Menu.");
         }
-        playerList = tournament.getCompetitors();
+        tournament.setCompetitors(tournament.getCompetitors());
     }
 
     // EFFECTS: prints the quarterfinal match ups onto console.
@@ -271,7 +270,7 @@ public class MeleeApp {
     // EFFECTS: searches list of players for given name. Name needs to be exact for a match
     // to be found.
     private boolean searchPlayer(String name) {
-        for (Player player: playerList) {
+        for (Player player: tournament.getCompetitors()) {
             if (name.equals(player.getName())) {
                 ArrayList<GameCharacter> characters = player.getMainChars();
                 System.out.printf("%s's Stats:", player.getName());
@@ -315,9 +314,9 @@ public class MeleeApp {
                 System.out.println("Invalid. Please pick between 1 or 2.");
             }
         }
-        int lowestRank = playerList.size() + 1;
+        int lowestRank = tournament.getCompetitors().size() + 1;
         Player newPlayer = new Player(name, wins, losses, characters, lowestRank, 0);
-        playerList.add(newPlayer);
+        tournament.getCompetitors().add(newPlayer);
     }
 
 
@@ -356,7 +355,7 @@ public class MeleeApp {
     public void saveMeleeApp() {
         try {
             jsonWriter.open();
-            jsonWriter.write(playerList);
+            jsonWriter.write(tournament.getCompetitors());
             jsonWriter.close();
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
@@ -370,7 +369,7 @@ public class MeleeApp {
     public void loadMeleeApp() {
         try {
             try {
-                playerList = jsonReader.read();
+                tournament.setCompetitors(jsonReader.read());
             } catch (GameCharacterException e) {
                 System.out.println("Unable to load player database: Contains invalid Game Character.");
             }

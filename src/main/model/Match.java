@@ -3,9 +3,16 @@ package model;
 // Represents a match between players.
 public class Match {
 
-    private final Player playerOne;
-    private final Player playerTwo;
+    private Player playerOne;
+    private Player playerTwo;
     private Player winner;
+
+    // EFFECTS: constructs a match with unfilled players and an undeclared winner.
+    public Match() {
+        this.playerOne = null;
+        this.playerTwo = null;
+        this.winner = null;
+    }
 
     // EFFECTS: constructs a match with two players and an undeclared winner.
     public Match(Player playerOne, Player playerTwo) {
@@ -42,6 +49,12 @@ public class Match {
             playerTwo.addWin();
             playerOne.addLoss();
         }
+    }
+
+    // EFFECTS: sets match players
+    public void setPlayers(Player playerOne, Player playerTwo) {
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
     }
 
     // EFFECTS: returns player one.
